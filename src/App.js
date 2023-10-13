@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+
+import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import GenericRoutes from './routes/generic/GenericRoutes'
 
 function App() {
+  document.oncopy = function() {
+    return false;
+  };
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn dasasddsasd sad dsaasddas sda asd sda sdadsqwewqewqe
-        </a>
-      </header>
+      <BrowserRouter>
+            <Routes>
+              <Route path="/*" element={<GenericRoutes />} />
+            </Routes>
+          </BrowserRouter>
     </div>
   );
 }

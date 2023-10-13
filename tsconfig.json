@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "target": "es6",
+        "lib": ["es6", "dom"],
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+      "module": "esnext",
+      
+      "strict": true,
+      "jsx": "react",
+      "esModuleInterop": true,
+    },
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.d.ts",
+      "src/**/*.tsx",
+      "src/**/*.css"
+, "src/pages/NotFound"    ],
+    
+    
+    "exclude": ["node_modules"]
+  }
+  

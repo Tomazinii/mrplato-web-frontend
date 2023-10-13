@@ -1,0 +1,34 @@
+
+
+.containerProposition{
+        height: 300px;
+        border-radius: 5px;
+        overflow-y: auto;
+}
+.conclusion{
+    background-color: #dd7a00;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.containerProposition hr {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px dashed rgb(129, 129, 129);
+  }
+
+  .containerButtonOperation{
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    justify-content: space-between;
+  }
+  .containerConclusion{
+    gap: 10px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-around;
+  }

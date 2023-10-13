@@ -1,0 +1,19 @@
+
+.containerButton{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.inputText{
+    background-color: rgb(141, 141, 141);
+    padding: 10px;
+    border-radius: 2px;
+
+}
+
+.inputForm{
+    width: 100%;
+}

@@ -1,0 +1,35 @@
+
+
+  .button span {
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    color: white;
+    background-color: var(--primary-color-button-light);
+    width: 20px;
+    border-radius: 2px;
+  }
+
+  .button {
+    color: #333;
+    height: 40px;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    display: flex;
+    background-color: white;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    cursor: pointer;
+    margin-top: 10px;
+
+    transition: 0.1s;
+  }
+
+
+  .buttonActive {
+    background-color: var(  --second-color-button-active);
+    color: white;
+
+  }
