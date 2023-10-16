@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styles from './Interface.module.css';
 import ButtonBack from '../../component/buttons/ButtonBack';
 import Layer1 from './Layer1';
 import Layer2 from './Layer2';
 import Layer3 from './Layer3';
 import Alert from './Alert';
-import { openSelectFormsProps, openTableSelectFormFunction, prove, ProveProps, restart, selectFormsProps} from '../../utils/Interface/InterfaceFuntions';
+import { addHypothesisOnlyAddFunction, addHypothesisRuleFunction, FeedBackAlerteInterface, openSelectFormsProps, openTableSelectFormFunction, prove, ProveProps, reduceAbsurdeFunction, removeHypothesisFunction, restart, selectFormFunction, selectFormsProps} from '../../utils/Interface/InterfaceFuntions';
 import FeedBack from './FeedBack';
 import TrasformList from '../../utils/transform';
+import { ContextMrplato } from '../../context/ContextMrplato';
+import { selected_form, SelectFormProps } from '../../api/Mrplato.api';
+import { SET_LIST_PROPOSITONS } from '../../api/types';
 
 
 interface IntrefaceProps {
@@ -21,7 +24,7 @@ interface IntrefaceProps {
 const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
   
   const [buttonActiveRule, setButonActiveRule] = React.useState("1")
-  const [selectedRule, setSelectedRule] = React.useState("")
+  const [selectedRule, setSelectedRule] = React.useState<any>()
   const [selectedRows, setSelectedRows] = React.useState<any>([])
   const [openAlert, setOpenAlert] = React.useState(false);
   const [messageAlert, setMessageAlert] = React.useState("");
@@ -32,10 +35,12 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
   const [openInputForm, setOpenInputForm] = React.useState(false)
   const [inputTextInputForm, setInputTextInputForm] = React.useState<any>([])
   const [questionProposition, setQuestionProposition] = React.useState<any>()
+  const [optionSelectedForm, setOptionSelectedForm] = React.useState<any>()
 
+  const context = useContext(ContextMrplato);
+  const { stateMrplato, dispatchMrplato } = context || {};
 
-
-  const selectRow = (index: string) => {
+  const selectRow = (index: number) => {
     if(selectedRows.includes(index)){
       setSelectedRows(selectedRows.filter((item:any) => item !== index))
     }else{
@@ -43,14 +48,12 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
     }
   }
 
-
-  
-
   const openInputFormContainer = () =>{
     setOpenInputForm(true)
 
   }
 
+  
 
   const handleAddhypothesis = () => {
       openInputFormContainer()
@@ -60,7 +63,6 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
     setInputTextInputForm([...inputTextInputForm, caracter])
   
   }
-  
 
   const handleInputTextInputFormClear = ()=> {
       const newList = [...inputTextInputForm];
@@ -81,10 +83,30 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
     if(openTableSelectForm){
       setOpenTableSelectForm(false)
     }else{
-    openTableSelectFormFunction(props)
+    openTableSelectFormFunction(props, dispatchMrplato)
   }
   }
 
+
+  const handleSelectFormFunction = (e: any) => {
+    const props: selectFormsProps = {
+      selectedRule: selectedRule,
+      selectedRows: selectedRows,
+      setOpenAlert: setOpenAlert, 
+      setMessageAlert: setMessageAlert, 
+      setSelectedRows: setSelectedRows, 
+      setSelectedRule: setSelectedRule, 
+      setFeedbackTypeAlert: setFeedbackTypeAlert, 
+      setFeedbackMessageAlert: setFeedbackMessageAlert,
+      setOpenFeedbackAlert: setOpenFeedbackAlert,
+      setOpenTableSelectForm: setOpenTableSelectForm
+    }
+    setOptionSelectedForm(e)
+    selectFormFunction(props, dispatchMrplato)
+    setOpenTableSelectForm(false)
+    
+
+  }
 
   const handleProve = ()=>{
     const props: ProveProps = {
@@ -96,10 +118,67 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
       setSelectedRule: setSelectedRule,
       setFeedbackTypeAlert: setFeedbackTypeAlert,
       setFeedbackMessageAlert: setFeedbackMessageAlert,
-      setOpenFeedbackAlert:setOpenFeedbackAlert
+      setOpenFeedbackAlert:setOpenFeedbackAlert,
+      dispatch: dispatchMrplato,
     }
     prove(props)
   }
+
+
+  const handleAddhypothesisOnlyAdd = ()=>{
+    const props: any = {
+      setFeedbackTypeAlert: setFeedbackTypeAlert,
+      setFeedbackMessageAlert: setFeedbackMessageAlert,
+      setOpenFeedbackAlert:setOpenFeedbackAlert,
+      inputTextInputForm: inputTextInputForm,
+    }
+    addHypothesisOnlyAddFunction(props, dispatchMrplato)
+    setOpenInputForm(false)
+  }
+
+const handleaddHypothesisRuleFunction = ()=>{
+  const props: any = {
+    selectedRule: selectedRule,
+    selectedRows: selectedRows,
+    setOpenAlert: setOpenAlert, 
+    setMessageAlert: setMessageAlert, 
+    setFeedbackTypeAlert:setFeedbackTypeAlert, 
+    setFeedbackMessageAlert: setFeedbackMessageAlert,
+    setOpenFeedbackAlert: setOpenFeedbackAlert,
+    stateMrplato:stateMrplato,
+    inputTextInputForm:inputTextInputForm
+  }
+  
+  addHypothesisRuleFunction(props, dispatchMrplato)
+  setOpenInputForm(false)
+}
+
+
+  const handleRemoveHypothesisFunction = () => {
+    const props: any = {
+      setFeedbackTypeAlert: setFeedbackTypeAlert,
+      setFeedbackMessageAlert: setFeedbackMessageAlert,
+      setOpenFeedbackAlert:setOpenFeedbackAlert,
+    }
+    removeHypothesisFunction(props,dispatchMrplato)
+
+  }
+
+
+  const handleReduceAbsurdeFunction = () => {
+    const props: any = {
+      setFeedbackTypeAlert: setFeedbackTypeAlert,
+      setFeedbackMessageAlert: setFeedbackMessageAlert,
+      setOpenFeedbackAlert:setOpenFeedbackAlert,
+    }
+    reduceAbsurdeFunction(props, dispatchMrplato)
+
+  }
+
+
+
+
+  
 
   const handleRestart = () => {
     setInputTextInputForm([])
@@ -108,9 +187,12 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
 
 
 
+
+
   React.useEffect(()=>{
     const transform = TrasformList.transform(dataQuestion.text)
     setQuestionProposition(transform)
+    dispatchMrplato({type: SET_LIST_PROPOSITONS, payload: transform})
     handleRestart()
     window.scrollTo(0, 0);
   },[dataQuestion])
@@ -140,7 +222,7 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
         
         <div className={`${styles.layer} ${styles.layer3}`}> 
           <div className={styles.layerContainer}>
-            <Layer3 questionProposition={questionProposition} selectedRule={selectedRule} setOpenInputForm={setOpenInputForm} inputTextInputForm={inputTextInputForm}  openInputForm={openInputForm} openTableSelectForm={openTableSelectForm} buttonActiveRule={buttonActiveRule} handleFunction={{handleProve, handleRestart, handleOpenTableSelect, handleInputTextInputForm, handleInputTextInputFormClear,handleAddhypothesis}}  selectedRows={selectedRows} selectRow={selectRow}  />
+            <Layer3 questionProposition={questionProposition} selectedRule={selectedRule} setOpenInputForm={setOpenInputForm} inputTextInputForm={inputTextInputForm}  openInputForm={openInputForm} openTableSelectForm={openTableSelectForm} buttonActiveRule={buttonActiveRule} handleFunction={{handleProve, handleRestart, handleOpenTableSelect, handleInputTextInputForm, handleInputTextInputFormClear,handleAddhypothesis, handleSelectFormFunction,handleAddhypothesisOnlyAdd,handleaddHypothesisRuleFunction,handleRemoveHypothesisFunction, handleReduceAbsurdeFunction}}  selectedRows={selectedRows} selectRow={selectRow}  />
           </div>
         </div>
 

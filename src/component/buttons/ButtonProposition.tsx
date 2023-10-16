@@ -8,21 +8,30 @@ interface ButtonPropositionProps {
     method: string;
     type: string;
     typeActive: boolean;
-    onClick: (index: string) => void;
-    id:string;
-    select: string;
-    listSelect: Array<string>;
-    setListSelect: (index: string) => void;
+    onClick: (index: any) => void;
+    id: number;
+    select: any;
+    listSelect: Array<number>;
+    setListSelect: (index: number) => void;
     color:string;
     questionPropostionDiv: boolean;
+    is_selected_form?: boolean 
 }
 
-const ButtonProposition: React.FC<ButtonPropositionProps> = ({index, name, method, type, typeActive, onClick, id, select, listSelect, setListSelect, color,questionPropostionDiv}) => {
+const ButtonProposition: React.FC<ButtonPropositionProps> = ({index, name, method, type, typeActive, onClick, id, select, listSelect, setListSelect, color,questionPropostionDiv,is_selected_form}) => {
   return (
-    <li onClick={()=>{
-      setListSelect(index)
-      onClick(id) 
-      }} className={`${styles.button}  ${select == id && styles.buttonActive || listSelect.includes(id) && styles.buttonActive}`}>
+    <>
+
+
+{type === "default" && 
+    <li onClick={
+      is_selected_form ?()=>{
+        setListSelect(Number(index))
+        onClick(Number(index)) 
+      } : ()=>{
+      setListSelect(Number(index))
+      onClick(Number(id)) 
+      }} className={`${styles.button}  ${select === id && styles.buttonActive || listSelect.includes(id) && styles.buttonActive}`}>
         
         
         <span style={{backgroundColor:color}} >{index}</span>
@@ -31,8 +40,60 @@ const ButtonProposition: React.FC<ButtonPropositionProps> = ({index, name, metho
         {questionPropostionDiv ? "" :
         <p>{method}</p> 
         }
-        <span style={{backgroundColor:color}}  className={typeActive ? `${styles.typePerso}` : `${styles.typedefault}`}>{type}</span>
+        <span style={{backgroundColor:color}}  className={typeActive ? `${styles.typePerso}` : `${styles.typedefault}`}>p</span>
     </li>
+    }
+
+{type === "add" && 
+    <li onClick={
+      is_selected_form ?()=>{
+        setListSelect(Number(index))
+        onClick(Number(index)) 
+      } : ()=>{
+      setListSelect(Number(index))
+      onClick(Number(id)) 
+      }} className={`${styles.button}  ${select === id && styles.buttonActive || listSelect.includes(id) && styles.buttonActive}`}>
+        
+        
+        <span style={{backgroundColor:"#6D0000"}} >{index}</span>
+        <p>{name}</p>
+
+        {questionPropostionDiv ? "" :
+        <p>{method}</p> 
+        }
+        <span style={{backgroundColor:"#6D0000"}}  className={typeActive ? `${styles.typePerso}` : `${styles.typedefault}`}>p</span>
+    </li>
+    }
+
+{type=== "red" && 
+    <li style={{opacity: .4}} className={`${styles.button}  ${select === id && styles.buttonActive || listSelect.includes(id) && styles.buttonActive}`}>
+        
+        
+        <span style={{backgroundColor:"#6D0000"}} >{index}</span>
+        <p>{name}</p>
+
+        {questionPropostionDiv ? "" :
+        <p>{method}</p> 
+        }
+        <span style={{backgroundColor:"#6D0000"}}  className={typeActive ? `${styles.typePerso}` : `${styles.typedefault}`}>p</span>
+    </li>
+    }
+
+{type === "rem" &&
+    <li style={{opacity: .4}} className={`${styles.button}  ${select === id && styles.buttonActive || listSelect.includes(id) && styles.buttonActive}`}>
+        
+        
+        <span style={{backgroundColor:"#6D0000"}} >{index}</span>
+        <p>{name}</p>
+
+        {questionPropostionDiv ? "" :
+        <p>{method}</p> 
+        }
+        <span style={{backgroundColor:"#6D0000"}}  className={typeActive ? `${styles.typePerso}` : `${styles.typedefault}`}>p</span>
+    </li>
+    }
+
+    </>
   )
 }
 

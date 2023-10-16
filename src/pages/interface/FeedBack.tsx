@@ -23,8 +23,8 @@ const FeedBack: React.FC<feedBackProps> = ({feedbackType, message, openFeedbackA
     <>
 
         {feedbackType === "Error" &&
-        <Snackbar open={openFeedbackAlert} autoHideDuration={time} onClose={()=>{setOpenFeedbackAlert(false)}}>
-            <Alert onClose={()=>{setOpenFeedbackAlert(false)}} severity="error">
+        <Snackbar  open={openFeedbackAlert} autoHideDuration={time} onClose={()=>{setOpenFeedbackAlert(false)}}>
+            <Alert style={{width:"100%"}} onClose={()=>{setOpenFeedbackAlert(false)}} severity="error">
             <AlertTitle>Error</AlertTitle>
             {message}
             </Alert>
@@ -34,7 +34,7 @@ const FeedBack: React.FC<feedBackProps> = ({feedbackType, message, openFeedbackA
 
         {feedbackType === "Info" &&
         <Snackbar open={openFeedbackAlert} autoHideDuration={time} onClose={()=>{setOpenFeedbackAlert(false)}}>
-            <Alert onClose={()=>{setOpenFeedbackAlert(false)}}  severity="info">
+            <Alert style={{width:"100%"}} onClose={()=>{setOpenFeedbackAlert(false)}}  severity="info">
                 <AlertTitle>Created</AlertTitle>
                 {message}
             </Alert>
@@ -44,7 +44,7 @@ const FeedBack: React.FC<feedBackProps> = ({feedbackType, message, openFeedbackA
 
         {feedbackType === "Success" &&
         <Snackbar open={openFeedbackAlert} autoHideDuration={time} onClose={()=>{setOpenFeedbackAlert(false)}}>
-            <Alert onClose={()=>{setOpenFeedbackAlert(false)}}  severity="success">
+            <Alert style={{width:"100%"}} onClose={()=>{setOpenFeedbackAlert(false)}}  severity="success">
                 {message}
             </Alert>
       </Snackbar>
