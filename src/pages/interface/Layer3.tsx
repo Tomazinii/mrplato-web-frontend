@@ -79,13 +79,13 @@ const Layer3: React.FC<Layer3Props> = ({selectedRows, selectRow, handleFunction,
 
 
             {questionProposition && questionProposition.list.map((content, index)=>(
-            <ButtonProposition questionPropostionDiv={true} color="" setListSelect={selectRow} listSelect={selectedRows} select={""} id={index} index={`${index}`} method={""} name={content} onClick={()=>{}} type='default' typeActive={false}  />
+            <ButtonProposition handleFuntionSelectRuleIndex={()=>{}} questionPropostionDiv={true} color="" setListSelect={selectRow} listSelect={selectedRows} select={""} id={index} index={`${index}`} method={""} name={content} onClick={()=>{}} type='default' typeActive={false}  />
             ))}
 
 
             <hr />
             {stateMrplato.new_lines_list && questionProposition && stateMrplato.new_lines_list.map((element: {content: string, methods_used_info: string, type:string }, index:number)=>(
-            <ButtonProposition questionPropostionDiv={false} color="" setListSelect={selectRow} listSelect={selectedRows} select={""} id={index + questionProposition.list.length} index={`${index + questionProposition.list.length}`} method={element.methods_used_info} name={element.content} onClick={()=>{}} type={element.type} typeActive={false}  />
+            <ButtonProposition handleFuntionSelectRuleIndex={()=>{}} questionPropostionDiv={false} color="" setListSelect={selectRow} listSelect={selectedRows} select={""} id={index + questionProposition.list.length} index={`${index + questionProposition.list.length}`} method={element.methods_used_info} name={element.content} onClick={()=>{}} type={element.type} typeActive={false}  />
             ))}
 
 
@@ -94,17 +94,20 @@ const Layer3: React.FC<Layer3Props> = ({selectedRows, selectRow, handleFunction,
         {openTableSelectForm && 
         <ul className={styles.containerProposition}>
         {stateMrplato.get_selected_options && stateMrplato.get_selected_options.map((element: {content: string, methods_used_info: string, type:string }, index: number)=>(
-            <ButtonProposition is_selected_form={true} questionPropostionDiv={false} color="#33997F" setListSelect={selectRow} listSelect={selectedRows} select={""} id={index + 1000} index={`${index}`} method={""} name={element.content} onClick={(e)=>{handleFunction.handleSelectFormFunction(e);
+            <ButtonProposition handleFuntionSelectRuleIndex={()=>{}} is_selected_form={true} questionPropostionDiv={false} color="#33997F" setListSelect={selectRow} listSelect={selectedRows} select={""} id={index + 1000} index={`${index}`} method={""} name={element.content} onClick={(e)=>{handleFunction.handleSelectFormFunction(e);
             }} type='default' typeActive={false}  />
             ))}
         </ul>
         }
 
         {
-          openInputForm ?
-          <InputForm handleAddhypothesisOnlyAdd={handleFunction.handleAddhypothesisOnlyAdd} setOpenInputForm={setOpenInputForm} handleInputTextInputFormClear={handleFunction.handleInputTextInputFormClear} inputTextInputForm={inputTextInputForm} handleInputTextInputForm={handleFunction.handleInputTextInputForm}/> :
-        
+          openInputForm ? activeAdd0 ?
 
+          <InputForm handleAdd={handleFunction.handleAddhypothesisOnlyAdd} setOpenInputForm={setOpenInputForm} handleInputTextInputFormClear={handleFunction.handleInputTextInputFormClear} inputTextInputForm={inputTextInputForm} handleInputTextInputForm={handleFunction.handleInputTextInputForm}/> :
+
+          <InputForm handleAdd={handleFunction.handleaddHypothesisRuleFunction} setOpenInputForm={setOpenInputForm} handleInputTextInputFormClear={handleFunction.handleInputTextInputFormClear} inputTextInputForm={inputTextInputForm} handleInputTextInputForm={handleFunction.handleInputTextInputForm}/> 
+          :
+        
 
         <div className={styles.containerButtonOperation}>`
           { 
@@ -118,7 +121,7 @@ const Layer3: React.FC<Layer3Props> = ({selectedRows, selectRow, handleFunction,
           }
 
           {buttonActiveRule === "1" && activeAdd &&
-            <ButtonOperation disabled={ validate.status ? false : true} text='ADD' onclick={()=>{handleFunction.handleaddHypothesisRuleFunction()}}/>
+            <ButtonOperation disabled={ validate.status ? false : true} text='ADD' onclick={()=>{handleFunction.handleAddhypothesis()}}/>
 
           }
           {buttonActiveRule === "1" && activeRemove &&

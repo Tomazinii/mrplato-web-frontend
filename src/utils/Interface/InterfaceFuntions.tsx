@@ -3,6 +3,7 @@ import { AddHypothesisOnlyAddProps, AddHypothesisRuleProps, RemoveHypothesisProp
 import { prove_validation, select_form_validation } from "../../validations/interface/InterfaceValidation"
 import { ADD_NEW_LINE_TO_LIST, GET_OPTIONS_SELECTED_FORM, REMOVE_METHOD_AND_CHANGE_NEW_LIST } from "../../api/types";
 import { mergeLists } from "./merge_rows";
+import { type_rule } from "./type_rule";
 
 
 export interface FeedBackAlerteInterface{
@@ -36,6 +37,9 @@ RestartInterface
 {
 
   dispatch: Dispatch<any>
+  stateMrplato:any
+  selectedRuleIndex: number
+  buttonActiveRule: any
  }
 
 
@@ -48,6 +52,9 @@ AlertInterface,
 RestartInterface
 {
   setOpenTableSelectForm: React.Dispatch<React.SetStateAction<boolean>>;
+  optionSelectedForm: number,
+  selectedRuleIndex: any,
+  stateMrplato: any
 
   
  }
@@ -79,27 +86,24 @@ export const prove = (props: ProveProps): void => {
         setFeedbackMessageAlert,
         setOpenFeedbackAlert,
         dispatch,
+        stateMrplato,
+        selectedRuleIndex,
+        buttonActiveRule
 
     } = props;
   
     const validate = prove_validation(String(selectedRule), selectedRows)
 
     if (validate.status) {
+      let rows:{content: string, type: string, methods_used_info: string}[] = mergeLists(stateMrplato.list_propositions.list, stateMrplato.new_lines_list)
+      
       const props_apply_rule_router: applyRuleInputProps = {
         
-          rows: [
-            {
-              content: "string",
-              type: "string",
-              methods_used_info: "string"
-            }
-          ],
-          index_selected_rows: [
-            0
-          ],
+          rows: rows,
+          index_selected_rows: selectedRows,
           selected_rule_data: {
-            type: "string",
-            index_selected_rule: 0
+            type: type_rule[Number(buttonActiveRule) - 1],
+            index_selected_rule: selectedRuleIndex
           
       }}
 
@@ -178,24 +182,22 @@ export const prove = (props: ProveProps): void => {
         setFeedbackTypeAlert, 
         setFeedbackMessageAlert,
         setOpenFeedbackAlert,
-        setOpenTableSelectForm
+        setOpenTableSelectForm,
+        optionSelectedForm,
+        selectedRuleIndex,
+        stateMrplato
     } = props;
   
     const validate = prove_validation(String(selectedRule), selectedRows)
 
     if (validate.status) {
+      let rows:{content: string, type: string, methods_used_info: string}[] = mergeLists(stateMrplato.list_propositions.list, stateMrplato.new_lines_list)
+
       const props_selected_form: SelectFormProps = {
-        rows: [
-          {
-            content: "string",
-            type: "string",
-            methods_used_info: "string"
-          }
-        ],
-        index_option: 0,
-        selected_row_index: 1,
-        selected_rule_index: 6,
-        
+        rows: rows,
+        index_option: optionSelectedForm,
+        selected_row_index: selectedRows[0],
+        selected_rule_index: selectedRuleIndex,
     }
 
       selected_form(props_selected_form).then((result)=>{
@@ -235,13 +237,14 @@ export const prove = (props: ProveProps): void => {
         setFeedbackMessageAlert,
         setOpenFeedbackAlert,
         inputTextInputForm,
-
+        selectedRuleIndex
     } = props;
   
+    
 
       const props_add_hypothesis_only_add_props: AddHypothesisOnlyAddProps = {
         input_data: inputTextInputForm,
-        selected_rule_index: 0
+        selected_rule_index: selectedRuleIndex
     }
 
       add_hypothesis_only_add_api(props_add_hypothesis_only_add_props).then((result)=>{
@@ -271,6 +274,7 @@ export const prove = (props: ProveProps): void => {
         setOpenFeedbackAlert,
         stateMrplato,
         inputTextInputForm,
+        selectedRuleIndex,
         
 
     } = props;
@@ -284,7 +288,7 @@ export const prove = (props: ProveProps): void => {
       const props_add_hypothesis_rule_props: AddHypothesisRuleProps = {
           rows: row,
           index_selected_row: selectedRows[0],
-          selected_rule_index: selectedRule,
+          selected_rule_index: selectedRuleIndex,
           input_data: inputTextInputForm
         }
       add_hypothesis_rule(props_add_hypothesis_rule_props).then((result) => {
@@ -322,18 +326,13 @@ export const prove = (props: ProveProps): void => {
         setFeedbackTypeAlert, 
         setFeedbackMessageAlert,
         setOpenFeedbackAlert,
+        stateMrplato,
 
     } = props;
   
 
       const props_remove_hypothesis: RemoveHypothesisProps = {
-        rows_created: [
-          {
-            content: "string",
-            type: "string",
-            methods_used_info: "string"
-          }
-        ],
+        rows_created: stateMrplato.new_lines_list,
     }
 
       rem_hypothesis(props_remove_hypothesis).then((result)=>{
@@ -368,18 +367,13 @@ export const prove = (props: ProveProps): void => {
         setFeedbackTypeAlert, 
         setFeedbackMessageAlert,
         setOpenFeedbackAlert,
+        stateMrplato,
 
     } = props;
   
 
       const props_reduce_absurd: RemoveHypothesisProps = {
-        rows_created: [
-          {
-            content: "string",
-            type: "string",
-            methods_used_info: "string"
-          }
-        ],
+        rows_created: stateMrplato.new_lines_list,
     }
 
     reduce_absurde(props_reduce_absurd).then((result)=>{

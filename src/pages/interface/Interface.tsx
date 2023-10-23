@@ -25,6 +25,7 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
   
   const [buttonActiveRule, setButonActiveRule] = React.useState("1")
   const [selectedRule, setSelectedRule] = React.useState<any>()
+  const [selectedRuleIndex, setSelectedRuleIndex] = React.useState<any>()
   const [selectedRows, setSelectedRows] = React.useState<any>([])
   const [openAlert, setOpenAlert] = React.useState(false);
   const [messageAlert, setMessageAlert] = React.useState("");
@@ -36,6 +37,8 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
   const [inputTextInputForm, setInputTextInputForm] = React.useState<any>([])
   const [questionProposition, setQuestionProposition] = React.useState<any>()
   const [optionSelectedForm, setOptionSelectedForm] = React.useState<any>()
+
+  
 
   const context = useContext(ContextMrplato);
   const { stateMrplato, dispatchMrplato } = context || {};
@@ -99,11 +102,16 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
       setFeedbackTypeAlert: setFeedbackTypeAlert, 
       setFeedbackMessageAlert: setFeedbackMessageAlert,
       setOpenFeedbackAlert: setOpenFeedbackAlert,
-      setOpenTableSelectForm: setOpenTableSelectForm
+      setOpenTableSelectForm: setOpenTableSelectForm,
+      optionSelectedForm: e,
+      selectedRuleIndex: selectedRuleIndex,
+      stateMrplato: stateMrplato
     }
-    setOptionSelectedForm(e)
+
+    
     selectFormFunction(props, dispatchMrplato)
     setOpenTableSelectForm(false)
+    handleRestart()
     
 
   }
@@ -120,6 +128,9 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
       setFeedbackMessageAlert: setFeedbackMessageAlert,
       setOpenFeedbackAlert:setOpenFeedbackAlert,
       dispatch: dispatchMrplato,
+      stateMrplato: stateMrplato,
+      selectedRuleIndex: selectedRuleIndex,
+      buttonActiveRule: buttonActiveRule
     }
     prove(props)
   }
@@ -131,6 +142,7 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
       setFeedbackMessageAlert: setFeedbackMessageAlert,
       setOpenFeedbackAlert:setOpenFeedbackAlert,
       inputTextInputForm: inputTextInputForm,
+      selectedRuleIndex: selectedRuleIndex
     }
     addHypothesisOnlyAddFunction(props, dispatchMrplato)
     setOpenInputForm(false)
@@ -146,7 +158,8 @@ const handleaddHypothesisRuleFunction = ()=>{
     setFeedbackMessageAlert: setFeedbackMessageAlert,
     setOpenFeedbackAlert: setOpenFeedbackAlert,
     stateMrplato:stateMrplato,
-    inputTextInputForm:inputTextInputForm
+    inputTextInputForm:inputTextInputForm,
+    selectedRuleIndex: selectedRuleIndex
   }
   
   addHypothesisRuleFunction(props, dispatchMrplato)
@@ -159,6 +172,7 @@ const handleaddHypothesisRuleFunction = ()=>{
       setFeedbackTypeAlert: setFeedbackTypeAlert,
       setFeedbackMessageAlert: setFeedbackMessageAlert,
       setOpenFeedbackAlert:setOpenFeedbackAlert,
+      stateMrplato: stateMrplato,
     }
     removeHypothesisFunction(props,dispatchMrplato)
 
@@ -170,6 +184,7 @@ const handleaddHypothesisRuleFunction = ()=>{
       setFeedbackTypeAlert: setFeedbackTypeAlert,
       setFeedbackMessageAlert: setFeedbackMessageAlert,
       setOpenFeedbackAlert:setOpenFeedbackAlert,
+      stateMrplato:stateMrplato
     }
     reduceAbsurdeFunction(props, dispatchMrplato)
 
@@ -215,7 +230,7 @@ const handleaddHypothesisRuleFunction = ()=>{
 
         <div className={`${styles.layer} ${styles.layer2}`}>
           <div className={styles.layerContainer}>
-            <Layer2 buttonActiveRule={buttonActiveRule} selectedRule={selectedRule} setSelectedRule={setSelectedRule}/>
+            <Layer2 buttonActiveRule={buttonActiveRule} selectedRule={selectedRule} setSelectedRuleIndex={setSelectedRuleIndex} setSelectedRule={setSelectedRule}/>
           </div>
         </div>
 

@@ -1,0 +1,1 @@
+export const type_rule = ["INFERENCE", "PREDICATE", "EQUIVALENCE"]

@@ -18,10 +18,10 @@ interface InputFormProps {
   inputTextInputForm: string[];
   handleInputTextInputFormClear: ()=>void;
   setOpenInputForm: React.Dispatch<React.SetStateAction<boolean>>
-  handleAddhypothesisOnlyAdd: ()=>void;
+  handleAdd: ()=>void;
 }
 
-const InputForm:React.FC<InputFormProps> = ({handleInputTextInputForm, inputTextInputForm,handleInputTextInputFormClear,setOpenInputForm, handleAddhypothesisOnlyAdd}) =>{
+const InputForm:React.FC<InputFormProps> = ({handleInputTextInputForm, inputTextInputForm,handleInputTextInputFormClear,setOpenInputForm, handleAdd}) =>{
     let inputValue = inputTextInputForm.join('')
   return (
     <div>
@@ -46,7 +46,7 @@ const InputForm:React.FC<InputFormProps> = ({handleInputTextInputForm, inputText
 
             </IconButton>
             <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
-            <SendIcon onClick={()=>{handleAddhypothesisOnlyAdd()}} style={{color: "rgb(3, 85, 28)"}} />
+            <SendIcon onClick={()=>{handleAdd()}} style={{color: "rgb(3, 85, 28)"}} />
             </IconButton>
             </Paper>
 

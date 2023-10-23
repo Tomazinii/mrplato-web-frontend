@@ -16,9 +16,10 @@ interface ButtonPropositionProps {
     color:string;
     questionPropostionDiv: boolean;
     is_selected_form?: boolean 
+    handleFuntionSelectRuleIndex: (index: number)=>void;
 }
 
-const ButtonProposition: React.FC<ButtonPropositionProps> = ({index, name, method, type, typeActive, onClick, id, select, listSelect, setListSelect, color,questionPropostionDiv,is_selected_form}) => {
+const ButtonProposition: React.FC<ButtonPropositionProps> = ({index, name, method, type, typeActive, onClick, id, select, listSelect, setListSelect, color,questionPropostionDiv,is_selected_form,handleFuntionSelectRuleIndex}) => {
   return (
     <>
 
@@ -31,6 +32,7 @@ const ButtonProposition: React.FC<ButtonPropositionProps> = ({index, name, metho
       } : ()=>{
       setListSelect(Number(index))
       onClick(Number(id)) 
+      handleFuntionSelectRuleIndex(Number(index))
       }} className={`${styles.button}  ${select === id && styles.buttonActive || listSelect.includes(id) && styles.buttonActive}`}>
         
         
