@@ -1,0 +1,12 @@
+
+.container{
+    margin: 0 auto;
+    width: 90%; 
+    margin-top: 40px;
+}
+.inputbox{
+    display: flex;
+    gap: 20px;
+    width: 300px;
+    flex-direction: column;
+}

@@ -5,23 +5,26 @@ import Layer1 from './Layer1';
 import Layer2 from './Layer2';
 import Layer3 from './Layer3';
 import Alert from './Alert';
-import { addHypothesisOnlyAddFunction, addHypothesisRuleFunction, FeedBackAlerteInterface, openSelectFormsProps, openTableSelectFormFunction, prove, ProveProps, reduceAbsurdeFunction, removeHypothesisFunction, restart, selectFormFunction, selectFormsProps} from '../../utils/Interface/InterfaceFuntions';
+import { addHypothesisOnlyAddFunction, addHypothesisRuleFunction, CreateSessionExerciseHandle, FeedBackAlerteInterface, openSelectFormsProps, openTableSelectFormFunction, prove, ProveProps, reduceAbsurdeFunction, removeHypothesisFunction, restart, selectFormFunction, selectFormsProps} from '../../utils/Interface/InterfaceFuntions';
 import FeedBack from './FeedBack';
 import TrasformList from '../../utils/transform';
 import { ContextMrplato } from '../../context/ContextMrplato';
-import { selected_form, SelectFormProps } from '../../api/Mrplato.api';
-import { SET_LIST_PROPOSITONS } from '../../api/types';
+import { create_session_exercise, CreateSessionExercise, selected_form, SelectFormProps } from '../../api/Mrplato.api';
+import { RESET_LIST_NEW_LINES, SET_LIST_PROPOSITONS } from '../../api/types';
+import NotFound from '../NotFound/NotFound';
+import { useParams } from 'react-router-dom';
+import { restart_session } from '../../api/Session.api';
 
 
 interface IntrefaceProps {
-  dataQuestion: {
-    id: string;
-    text: string;
-  }
+  stateExercise: any
 }
 
 
-const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
+const Interface: React.FC<IntrefaceProps> = ({stateExercise}) => {
+
+  const {idQuestion, idLista} = useParams()
+
   
   const [buttonActiveRule, setButonActiveRule] = React.useState("1")
   const [selectedRule, setSelectedRule] = React.useState<any>()
@@ -42,8 +45,11 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
 
   const context = useContext(ContextMrplato);
   const { stateMrplato, dispatchMrplato } = context || {};
+  
 
   const selectRow = (index: number) => {
+    
+
     if(selectedRows.includes(index)){
       setSelectedRows(selectedRows.filter((item:any) => item !== index))
     }else{
@@ -63,14 +69,16 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
   }
 
   const handleInputTextInputForm = (caracter: any)=> {
-    setInputTextInputForm([...inputTextInputForm, caracter])
+    // setInputTextInputForm([...inputTextInputForm, caracter])
+    
+    setInputTextInputForm( inputTextInputForm +  caracter + " ")
   
   }
 
   const handleInputTextInputFormClear = ()=> {
-      const newList = [...inputTextInputForm];
-      newList.pop();
-      setInputTextInputForm([...newList])
+      // const newList = [...inputTextInputForm];
+      // newList.pop();
+      setInputTextInputForm(inputTextInputForm.slice(0,-1))
     
   
   }
@@ -82,41 +90,27 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
       setOpenAlert: setOpenAlert,
       setMessageAlert: setMessageAlert,
       setOpenTableSelectForm: setOpenTableSelectForm,
+      buttonActiveRule: buttonActiveRule,
+      selectedRuleIndex: selectedRuleIndex,
+      pb_index: Number(idQuestion),
+      list_index: Number(idLista),
+      setFeedbackTypeAlert: setFeedbackTypeAlert,
+      setFeedbackMessageAlert: setFeedbackMessageAlert,
+      setOpenFeedbackAlert: setOpenFeedbackAlert
     }
     if(openTableSelectForm){
       setOpenTableSelectForm(false)
     }else{
+
+      
     openTableSelectFormFunction(props, dispatchMrplato)
   }
   }
 
 
   const handleSelectFormFunction = (e: any) => {
-    const props: selectFormsProps = {
-      selectedRule: selectedRule,
-      selectedRows: selectedRows,
-      setOpenAlert: setOpenAlert, 
-      setMessageAlert: setMessageAlert, 
-      setSelectedRows: setSelectedRows, 
-      setSelectedRule: setSelectedRule, 
-      setFeedbackTypeAlert: setFeedbackTypeAlert, 
-      setFeedbackMessageAlert: setFeedbackMessageAlert,
-      setOpenFeedbackAlert: setOpenFeedbackAlert,
-      setOpenTableSelectForm: setOpenTableSelectForm,
-      optionSelectedForm: e,
-      selectedRuleIndex: selectedRuleIndex,
-      stateMrplato: stateMrplato
-    }
-
     
-    selectFormFunction(props, dispatchMrplato)
-    setOpenTableSelectForm(false)
-    handleRestart()
     
-
-  }
-
-  const handleProve = ()=>{
     const props: ProveProps = {
       selectedRule: selectedRule,
       selectedRows: selectedRows,
@@ -130,25 +124,74 @@ const Interface: React.FC<IntrefaceProps> = ({dataQuestion}) => {
       dispatch: dispatchMrplato,
       stateMrplato: stateMrplato,
       selectedRuleIndex: selectedRuleIndex,
-      buttonActiveRule: buttonActiveRule
+      buttonActiveRule: buttonActiveRule,
+      selection: e,
+      input_formula: "",
+      list_index: Number(idLista),
+      pb_index: Number(idQuestion)
+    }
+
+    
+    prove(props)
+    setOpenTableSelectForm(false)
+    // handleRestart()
+    
+
+  }
+
+  const handleProve = ()=>{
+
+    
+    const props: ProveProps = {
+      selectedRule: selectedRule,
+      selectedRows: selectedRows,
+      setOpenAlert: setOpenAlert,
+      setMessageAlert: setMessageAlert,
+      setSelectedRows: setSelectedRows,
+      setSelectedRule: setSelectedRule,
+      setFeedbackTypeAlert: setFeedbackTypeAlert,
+      setFeedbackMessageAlert: setFeedbackMessageAlert,
+      setOpenFeedbackAlert:setOpenFeedbackAlert,
+      dispatch: dispatchMrplato,
+      stateMrplato: stateMrplato,
+      selectedRuleIndex: selectedRuleIndex,
+      buttonActiveRule: buttonActiveRule,
+      selection: 0,
+      input_formula: "",
+      pb_index: Number(idQuestion),
+      list_index: Number(idLista),
     }
     prove(props)
   }
 
 
   const handleAddhypothesisOnlyAdd = ()=>{
-    const props: any = {
+    const props: ProveProps = {
+      selectedRule: selectedRule,
+      selectedRows: selectedRows,
+      setOpenAlert: setOpenAlert,
+      setMessageAlert: setMessageAlert,
+      setSelectedRows: setSelectedRows,
+      setSelectedRule: setSelectedRule,
       setFeedbackTypeAlert: setFeedbackTypeAlert,
       setFeedbackMessageAlert: setFeedbackMessageAlert,
       setOpenFeedbackAlert:setOpenFeedbackAlert,
-      inputTextInputForm: inputTextInputForm,
-      selectedRuleIndex: selectedRuleIndex
+      dispatch: dispatchMrplato,
+      stateMrplato: stateMrplato,
+      selectedRuleIndex: selectedRuleIndex,
+      buttonActiveRule: buttonActiveRule,
+      selection: 0,
+      input_formula: inputTextInputForm,
+      pb_index: Number(idQuestion),
+      list_index: Number(idLista),
     }
-    addHypothesisOnlyAddFunction(props, dispatchMrplato)
+    prove(props)
     setOpenInputForm(false)
   }
 
+
 const handleaddHypothesisRuleFunction = ()=>{
+
   const props: any = {
     selectedRule: selectedRule,
     selectedRows: selectedRows,
@@ -168,6 +211,8 @@ const handleaddHypothesisRuleFunction = ()=>{
 
 
   const handleRemoveHypothesisFunction = () => {
+
+    
     const props: any = {
       setFeedbackTypeAlert: setFeedbackTypeAlert,
       setFeedbackMessageAlert: setFeedbackMessageAlert,
@@ -190,39 +235,56 @@ const handleaddHypothesisRuleFunction = ()=>{
 
   }
 
-
-
-
-  
-
   const handleRestart = () => {
+    setOpenTableSelectForm(false)
     setInputTextInputForm([])
     restart(setSelectedRows, setSelectedRule)
   }
 
-
-
-
+  
 
   React.useEffect(()=>{
-    const transform = TrasformList.transform(dataQuestion.text)
-    setQuestionProposition(transform)
-    dispatchMrplato({type: SET_LIST_PROPOSITONS, payload: transform})
-    handleRestart()
-    window.scrollTo(0, 0);
-  },[dataQuestion])
+    if(!isNaN(Number(idQuestion)) && !isNaN(Number(idLista))){
+    const props: CreateSessionExercise = {
+      list_index: Number(idLista),
+      pb_index: Number(idQuestion),
+    }
+
+    if((Number(idQuestion) !== Number(window.localStorage.getItem("idQuestion"))) ||  (Number(idLista) !== Number(window.localStorage.getItem("idLista")))){
+      
+      restart_session()
+      dispatchMrplato({type:RESET_LIST_NEW_LINES})
+    }
+    
+    CreateSessionExerciseHandle(props, dispatchMrplato)
+  }
+  window.localStorage.setItem('idQuestion', String(idQuestion))
+  window.localStorage.setItem('idLista', String(idLista))
+  
+
+  },[])
 
 
+
+
+
+
+  if(isNaN(Number(idLista)) || isNaN(Number(idQuestion)) || stateExercise.question[Number(idLista)] === undefined || stateExercise.question[Number(idLista)].data[Number(idQuestion)] === undefined) {
+        
+    return <NotFound/>
+    
+}  
+
+    
   return (
-
-    <div className={styles.container}>
+    <div className={styles.containerMaster}>
+      <div className={styles.container}>
 
         <Alert messageAlert={messageAlert} openAlert={openAlert} setOpenAlert={setOpenAlert}/>
         <FeedBack setOpenFeedbackAlert={setOpenFeedbackAlert} openFeedbackAlert={openFeedbackAlert} feedbackType={feedbackTypeAlert} message={feedbackMessageAlert}/>
 
         <div className={`${styles.layer} ${styles.layer1}`}>
           <div className={styles.layerContainer}>
-          <ButtonBack text='BACK' path={""}/>
           <Layer1 buttonActive={buttonActiveRule} onClick={setButonActiveRule}/>
           </div>
         </div>
@@ -242,6 +304,7 @@ const handleaddHypothesisRuleFunction = ()=>{
         </div>
 
 
+    </div>
     </div>
   )
 }

@@ -22,7 +22,7 @@ interface InputFormProps {
 }
 
 const InputForm:React.FC<InputFormProps> = ({handleInputTextInputForm, inputTextInputForm,handleInputTextInputFormClear,setOpenInputForm, handleAdd}) =>{
-    let inputValue = inputTextInputForm.join('')
+    let inputValue = inputTextInputForm
   return (
     <div>
             <Paper
@@ -46,7 +46,8 @@ const InputForm:React.FC<InputFormProps> = ({handleInputTextInputForm, inputText
 
             </IconButton>
             <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
-            <SendIcon onClick={()=>{handleAdd()}} style={{color: "rgb(3, 85, 28)"}} />
+            <SendIcon onClick={()=>{handleAdd()
+            }} style={{color: "rgb(3, 85, 28)"}} />
             </IconButton>
             </Paper>
 

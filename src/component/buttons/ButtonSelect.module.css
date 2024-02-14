@@ -1,11 +1,29 @@
 
-
+@media (max-width: 800px){
 .button{
     height: 25px;
     background-color: rgb(4, 134, 21);
     border: none;
     border-radius: 5px;
+    font-family: "default";
     padding: 5px;
     color: white;
-    font-weight: 600;
+    font-weight: 500;
 }
+}
+
+
+@media (min-width: 800px){
+    .button{
+        height: 25px;
+        background-color: rgb(4, 134, 21);
+        border: none;
+        width: 20%;
+        border-radius: 5px;
+        font-family: "default";
+        padding: 5px;
+        color: white;
+        font-weight: 500;
+    }
+    }
+    

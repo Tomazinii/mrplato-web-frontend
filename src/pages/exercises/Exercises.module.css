@@ -1,0 +1,186 @@
+
+
+  .container {
+    min-height: 100vh;
+    margin: 0 auto;
+    font-weight: 700;
+    width: 95%;
+  }
+  
+  .boxlist {
+    display: flex;
+    margin-top: 15px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 20px;
+    height: 45px;
+    cursor: pointer;
+    font-family: "default";
+    
+    background: linear-gradient(
+      100deg,
+      rgb(235, 180, 61)80%,
+      rgb(221, 156, 16) 20%
+      
+    );
+    text-transform: uppercase;
+  
+    position: relative;
+    color: #292929;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    padding: 20px;
+    transition: 0.3s;
+    transform: translateX(-20px);
+    animation: anime-left 0.3s forwards;
+  }
+  
+  @keyframes anime-left {
+    to {
+      transform: translateX(0);
+    }
+  }
+  .boxlist:hover {
+    opacity: 80%;
+  }
+  
+  .boxlist.block {
+    opacity: 40%;
+    cursor: auto;
+  }
+  
+  .back{
+    background-color: rgb(168, 120, 216);
+    text-align: center;
+    margin-top: 5px;
+    font-family: "default";
+    font-weight: 300;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+  }
+  
+  .boxlist.block:hover {
+    opacity: 40%;
+    color: white;
+    font-size: 1rem;
+  }
+  .boxlistMaster {
+    margin-top: 30px;
+  }
+  .exercisetext {
+    width: 200px; /* Define a largura da div */
+    overflow: hidden; /* Esconde o conteúdo que estiver fora dos limites da div */
+    text-overflow: ellipsis; /* Adiciona reticências (...) para indicar que o texto foi cortado */
+    white-space: nowrap;
+  }
+  
+  .title {
+    font-family: "default";
+    margin: 1rem 0;
+    color: #0e001e;
+    position: relative;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 1;
+  }
+  
+  .title::after {
+    height: 15px;
+    content: "";
+    display: block;
+    width: 15px;
+    border-radius: 2px;
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+    background-color: rgb(221, 156, 16);
+  }
+  
+  .score {
+    display: flex;
+    align-items: center;
+  }
+  
+  .title::before {
+    --slice-0: inset(50% 50% 50% 50%);
+    --slice-1: inset(80% -6px 0 0);
+    --slice-2: inset(50% -6px 30% 0);
+    --slice-3: inset(10% -6px 85% 0);
+    --slice-4: inset(40% -6px 43% 0);
+    --slice-5: inset(80% -6px 5% 0);
+    width: 100px;
+    content: "Mrplato";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      45deg,
+      transparent 3%,
+      #a0f600 3%,
+      #a0f600 5%,
+      #ffe601 5%
+    );
+    text-shadow: -3px -3px 0px #f5f4e7, 3px 3px 0px #00e6f6;
+    clip-path: var(--slice-0);
+    animation: 1s glitch;
+  
+    animation-timing-function: steps(2, end);
+  }
+  
+  @keyframes glitch {
+    0% {
+      clip-path: var(--slice-1);
+      transform: translate(-20px, -10px);
+    }
+    10% {
+      clip-path: var(--slice-3);
+      transform: translate(10px, 10px);
+    }
+    20% {
+      clip-path: var(--slice-1);
+      transform: translate(-10px, 10px);
+    }
+    30% {
+      clip-path: var(--slice-3);
+      transform: translate(0px, 5px);
+    }
+    40% {
+      clip-path: var(--slice-2);
+      transform: translate(-5px, 0px);
+    }
+    50% {
+      clip-path: var(--slice-3);
+      transform: translate(5px, 0px);
+    }
+    60% {
+      clip-path: var(--slice-4);
+      transform: translate(5px, 10px);
+    }
+    70% {
+      clip-path: var(--slice-2);
+      transform: translate(-10px, 10px);
+    }
+    80% {
+      clip-path: var(--slice-5);
+      transform: translate(20px, -10px);
+    }
+    90% {
+      clip-path: var(--slice-1);
+      transform: translate(-10px, 0px);
+    }
+    100% {
+      clip-path: var(--slice-1);
+      transform: translate(0);
+    }
+  }
+  
+  .loading {
+    height: 50vh;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

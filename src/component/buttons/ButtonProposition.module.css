@@ -17,6 +17,7 @@
     border-radius: 2px;
     font-size: 0.9rem;
     display: flex;
+    font-family: "default";
     background-color: white;
     align-items: center;
     justify-content: space-between;

@@ -8,9 +8,14 @@ import { MrplatoProvider } from "../../context/ContextMrplato";
 import { ContextExercises } from "../../context/ContextExercises";
 import { get_exercise } from "../../api/Exercise.api";
 import { GET_EXERCISE } from "../../api/types";
+import Exercise from "../../pages/exercises/Exercise";
+import ListExercise from "../../pages/exercises/ListExercise";
+import Settings from "../../pages/settings/Settings";
 
 export function ContainerRoutes() {
   const {stateExercise, dispatchExercise} = useContext(ContextExercises) || {} 
+
+  
 
   React.useEffect(()=>{
     get_exercise().then((data)=>{
@@ -23,9 +28,14 @@ export function ContainerRoutes() {
   return (
     <MrplatoProvider>
       <Routes>
-        {/* <Route path="" element={<Home />} /> */}
+        <Route path="" element={<Home />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/exercises/" element={<Exercise stateExercise={stateExercise}/>} />
+        <Route path="/exercises/:idLista/" element={<ListExercise stateExercise={stateExercise}/>} />
+        
+
         {stateExercise.question && 
-        <Route path="" element={<Interface dataQuestion={{ text: stateExercise.question, id: "0" }} />} />
+        <Route path="/exercises/:idLista/:idQuestion/" element={<Interface stateExercise={stateExercise} />} />
       }
         <Route path="content" element={<Content />} />
         <Route path="*" element={<NotFound/>} />

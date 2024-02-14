@@ -7,40 +7,51 @@ const URL = process.env.REACT_APP_URL;
 
 const PATH_DEFAULT = "/api/v1/mrplato/operations"
 
-
 export interface Rows {
   rows: {content: string, type: string, methods_used_info: string}[]
 }
 
 export interface applyRuleInputProps{
-  rows: {content: string, type: string, methods_used_info: string}[]
   index_selected_rows: number[]
-  selected_rule_data: {type: string, index_selected_rule: number}
+  pb_index: number
+  type_selected: string
+  sel_rule: number
+  input_formula: string
+  total_or_partial: string
+  selection: number
+  list_index: number
 }
 
 export interface applyRuleOutputProps{
   type_output: string
   message: string
-  new_line: {content: string, type: string, methods_used_info: string}
+  lines: [{content: string, type: string, methods_used_info: string}]
 
 }
 
 export const apply_rule_router = async (props: applyRuleInputProps, dispatch: Dispatch<any> ) => {
-
-  const {rows, index_selected_rows, selected_rule_data} = props;
+  
+  const {index_selected_rows, pb_index, type_selected, sel_rule, input_formula, total_or_partial,selection,list_index} = props;
     
     const config = {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+
       },
+      withCredentials: true
 
     };
     
     const body = JSON.stringify({ 
-      rows: rows, 
-      index_selected_rows: index_selected_rows, 
-      selected_rule_data: selected_rule_data
+        selected_proof_line_indexes: index_selected_rows,
+        pb_index: pb_index,
+        type_selected: type_selected,
+        sel_rule: sel_rule,
+        input_formula: input_formula,
+        total_or_partial: total_or_partial,
+        selection: selection,
+        list_index: list_index,
     });
     
 
@@ -48,8 +59,11 @@ export const apply_rule_router = async (props: applyRuleInputProps, dispatch: Di
     try {
 
       const res = (await axios.post(URL + PATH_DEFAULT + "/apply_rule_router/", body, config));
+      
       const data: applyRuleOutputProps = res.data
+
       return data
+      
 
     } catch (err) {
     }
@@ -58,24 +72,41 @@ export const apply_rule_router = async (props: applyRuleInputProps, dispatch: Di
 
 
 export interface getOptionProps {
-  rows: {content: string, type: string, methods_used_info: string}[],
-  selected_row_index: number
+  selected_proof_line_indexes: number[],
+  pb_index: number,
+  type_selected: string,
+  sel_rule: number,
+  input_formula: string,
+  total_or_partial: string,
+  selection: any,
+  list_index: number,
+  
+}
+
+export interface CreateSessionExercise {
+  pb_index: number,
+  list_index: number,
 }
 
 
 export const get_options_selected_form = async (props: getOptionProps) => {
 
-  const {rows, selected_row_index} = props;
+  const {selected_proof_line_indexes, pb_index,type_selected, sel_rule, list_index, total_or_partial} = props;
     const config = {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      withCredentials: true
     };
     
     const body = JSON.stringify({ 
-      rows: rows, 
-      selected_row_index: selected_row_index
+      selected_proof_line_indexes: selected_proof_line_indexes, 
+      pb_index: pb_index,
+      list_index: list_index,
+      type_selected: type_selected,
+      sel_rule: sel_rule,
+      total_or_partial: total_or_partial,
     });
     
     try {
@@ -85,6 +116,9 @@ export const get_options_selected_form = async (props: getOptionProps) => {
     } catch (err) {
     }
 };
+
+
+
 
 
 export interface SelectFormProps {
@@ -120,6 +154,36 @@ export const selected_form = async (props: SelectFormProps) => {
     }
 };
 
+export const create_session_exercise = async (props: CreateSessionExercise) => {
+  const {list_index, pb_index} = props;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+
+    },
+    withCredentials: true
+
+  };
+    
+    const body = JSON.stringify({ 
+        pb_index: pb_index,
+        list_index: list_index
+    });
+    
+    try {
+      const res = (await axios.post(URL + PATH_DEFAULT + "/create_session_exercise/", body, config));
+      
+      const data = res.data
+      return data
+    } catch (err) {
+    }
+};
+
+
+
+
 
 
 export interface AddHypothesisOnlyAddProps{
@@ -154,15 +218,10 @@ export interface AddHypothesisRuleProps {
   index_selected_row: number 
   selected_rule_index: number
   input_data: string[]
-
 }
-
 
 export const add_hypothesis_rule = async (props: AddHypothesisRuleProps) => {
   const {index_selected_row,input_data,rows,selected_rule_index} = props;
-
-  
-
     const config = {
       headers: {
         "Content-Type": "application/json",

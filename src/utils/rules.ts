@@ -1,10 +1,27 @@
-export interface PredicateRule {
+
+
+export interface HypothesisRule {
   id: string;
   name: string;
   method: string;
 }
 
 export interface InferenceRule {
+  id: string;
+  name: string;
+  method: string;
+}
+
+
+
+export interface PredicateEquivalenceRule {
+  id: string;
+  name: string;
+  method: string;
+}
+
+
+export interface PredicateInferenceRule {
   id: string;
   name: string;
   method: string;
@@ -17,454 +34,470 @@ export interface EquivalenceRule {
 }
 
 export const Rules = {
-  predicate: [
+  hypothesis: [
     {
-      id: "1000",
-      name: "generalização universal",
-      method: "p(a) = ∀xp(x)",
-    },
-    {
-      id: "1001",
-      name: "Generalização Existencial:",
-      method: "p(a) ⇒ ∃xp(x) ",
-    },
-    {
-      id: "1002",
-      name: "Particulação Universal",
-      method: "∀xp(x) ⇒ p(a) ",
-    },
-    {
-      id: "1003",
-      name: "Particularização Existencia",
-      method: "∃xp(x) ⇒ p(a) ",
-    },
-    {
-      id: "1004",
-      name: "De Morgan Universal:",
-      method: " -∀xp(x) ⇒ x~p(x) ",
-    },
-    {
-      id: "1005",
-      name: "De Morgan Universal:",
-      method: "∃x-p(x) ⇒ ~xp(x)",
-    },
-    {
-      id: "1006",
-      name: "De Morgan Existencial:",
-      method: "~∃xp(x) ⇒ ∀x~p(x)",
-    },
-    {
-      id: "1007",
-      name: "De Morgan Existencial:",
-      method: "∀x~~p(x) ⇒ ~∃xp(x)",
-    },
-  ] as PredicateRule[],
-  inference: [
-    {
-      id: "1008",
+      id: "5000",
       name: "Ad. Hipótese",
       method: "p ⇒ p",
     },
     {
-      id: "1009",
+      id: "5001",
       name: "Rem. Hipótese",
       method: "p ⇒ p → q",
     },
     {
-      id: "1010",
+      id: "5002",
       name: "Red. Absurdo",
       method: "p ⇒ ∼p",
     },
+
+  ] as HypothesisRule[],
+  predicate_inference: [
     {
-      id: "1011",
+      id: "2000",
+      name: "GU_lr",
+      method: "p(a) ⇒ ∀xp(x)",
+    },
+    {
+      id: "2001",
+      name: "GE_lr",
+      method: "p(a) ⇒ ∃xp(x)",
+    },
+    {
+      id: "2002",
+      name: "PU_lr",
+      method: "∀xp(x) ⇒ p(a)",
+    },
+    {
+      id: "2003",
+      name: "PE_lr",
+      method: "∃xp(x) ⇒ p(a)",
+    },
+  ] as PredicateInferenceRule[],
+
+  predicate_equivalence: [
+    {
+      id: "3000",
+      name: "DMU_lr",
+      method: "∼∀xp(x) ⇒ ∃x∼p(x)",
+    },
+    {
+      id: "3001",
+      name: "DMU_rl",
+      method: "∃x∼p(x) ⇒ ∼∀xp(x)",
+    },
+    {
+      id: "3002",
+      name: "DME_lr",
+      method: "∼∃xp(x) ⇒ ∀x∼p(x)",
+    },
+    {
+      id: "3003",
+      name: "DME_rl",
+      method: "∀x∼p(x) ⇒ ∼∃xp(x)",
+    },
+  ] as PredicateEquivalenceRule[],
+  inference: [
+    {
+      id: "1000",
       name: "Absorção",
       method: "p → q ⇒ p → (p → q)",
     },
     {
-      id: "1012",
+      id: "1001",
       name: "Adição_1",
       method: "p ⇒ p ∨ q",
     },
     {
-      id: "1013",
+      id: "1002",
       name: "Adição_2",
       method: "p ⇒ q ∨ p",
     },
     {
-      id: "1014",
+      id: "1003",
       name: "Conjunção_1",
       method: "p, q ⇒ p ∧ q",
     },
     {
-      id: "1015",
+      id: "1004",
       name: "Conjunção_2",
       method: "p, q ⇒ q ∧ p",
     },
     {
-      id: "1016",
+      id: "1005",
       name: "Dil. constr.",
       method: "p → q, r → s, p ∨ r ⇒ q ∨ s",
     },
     {
-      id: "1017",
+      id: "1006",
       name: "Dil. destr.",
       method: "p → q, r → s, ∼q ∨ ∼s ⇒ ∼p ∨ ∼r",
     },
     {
-      id: "1018",
+      id: "1007",
       name: "Modus ponens",
       method: "p → q, p ⇒ q",
     },
     {
-      id: "1019",
+      id: "1008",
       name: "Modus tollens",
       method: "p → q, ∼q ⇒ ∼p",
     },
     {
-      id: "1020",
+      id: "1009",
       name: "Sil. disj._1",
       method: "p ∨ q, ∼p ⇒ q",
     },
     {
-      id: "1021",
+      id: "1010",
       name: "Sil. disj._2",
       method: "p ∨ q, ∼q ⇒ p",
     },
     {
-      id: "1022",
-      name: "Sil. hipot",
+      id: "1011",
+      name: "Sil. hipot.",
       method: "p → q, q → r ⇒ p → r",
     },
     {
-      id: "1023",
+      id: "1012",
       name: "Simplificação_1",
       method: "p ∧ q ⇒ p",
     },
     {
-      id: "1024",
+      id: "1013",
       name: "Simplificação_2",
       method: "p ∧ q ⇒ q",
     },
   ] as InferenceRule[],
   equivalence: [
     {
-      id: "1025",
-      name: "Absorção_cd",
+      id: "4000",
+      name: "ABS_cond_lr",
       method: "p → (p ∧ q) ⇔ p → q",
     },
     {
-      id: "1026",
-      name: "Absorção_cd",
+      id: "4001",
+      name: "ABS_cond_rl",
       method: "p → q ⇔ p → (p ∧ q)",
     },
     {
-      id: "1027",
-      name: "Absorção_c",
+      id: "4002",
+      name: "ABS_c_lr",
       method: "p ∧ (p ∨ q) ⇔ p",
     },
     {
-      id: "1028",
-      name: "Absorção_d",
+      id: "4003",
+      name: "ABS_d_lr",
       method: "p ∨ (p ∧ q) ⇔ p",
     },
     {
-      id: "1029",
-      name: "Associação_c",
+      id: "4004",
+      name: "ASSOC_c_lr",
       method: "p ∧ (q ∧ r) ⇔ (p ∧ q) ∧ r",
     },
     {
-      id: "1030",
-      name: "Associação_c",
+      id: "4005",
+      name: "ASSOC_c_rl",
       method: "(p ∧ q) ∧ r ⇔ p ∧ (q ∧ r)",
     },
     {
-      id: "1031",
-      name: "Associação_d",
+      id: "4006",
+      name: "ASSOC_d_lr",
       method: "p ∨ (q ∨ r) ⇔ (p ∨ q) ∨ r",
     },
     {
-      id: "1032",
-      name: "Associação_d",
+      id: "4007",
+      name: "ASSOC_d_rl",
       method: "(p ∨ q) ∨ r ⇔ p ∨ (q ∨ r)",
     },
     {
-      id: "1033",
-      name: "Bicondicional_1",
+      id: "4008",
+      name: "Bic1_lr",
       method: "p ↔ q ⇔ (p → q) ∧ (q → p)",
     },
     {
-      id: "1034",
-      name: "Bicondicional_1",
+      id: "4009",
+      name: "Bic1_rl",
       method: "(p → q) ∧ (q → p) ⇔ p ↔ q",
     },
     {
-      id: "1035",
-      name: "Bicondicional_2",
+      id: "4010",
+      name: "Bic2_lr",
       method: "p ↔ q ⇔ (∼p ∨ q) ∧ (∼q ∨ p)",
     },
     {
-      id: "1036",
-      name: "Bicondicional_2",
+      id: "4011",
+      name: "Bic2_rl",
       method: "(∼p ∨ q) ∧ (∼q ∨ p) ⇔ p ↔ q",
     },
     {
-      id: "1037",
-      name: "Bicondicional_3",
+      id: "4012",
+      name: "Bic3_lr",
       method: "p ↔ q ⇔ (p ∧ q) ∨ (∼p ∧ ∼q)",
     },
     {
-      id: "1038",
-      name: "Bicondicional_3",
+      id: "4013",
+      name: "Bic3_rl",
       method: "(p ∧ q) ∨ (∼p ∧ ∼q) ⇔ p ↔ q",
     },
     {
-      id: "1039",
-      name: "Clavius",
+      id: "4014",
+      name: "Clavius_lr",
       method: "p ⇔ ∼p → p",
     },
     {
-      id: "1040",
-      name: "Clavius",
+      id: "4015",
+      name: "Clavius_rl",
       method: "∼p → p ⇔ p",
     },
     {
-      id: "1041",
-      name: "Comutação_c",
+      id: "4016",
+      name: "COM_c_lr",
       method: "p ∧ q ⇔ q ∧ p",
     },
     {
-      id: "1042",
-      name: "Comutação_d",
+      id: "4017",
+      name: "COM_d_lr",
       method: "p ∨ q ⇔ q ∨ p",
     },
     {
-      id: "1043",
-      name: "Complemento_1",
+      id: "4018",
+      name: "COMPL_c_lr",
       method: "p ∨ ∼p ⇔ ⊤",
     },
     {
-      id: "1044",
-      name: "Complemento_1",
+      id: "4019",
+      name: "COMPL_c_rl",
       method: "⊤ ⇔ p ∨ ∼p",
     },
     {
-      id: "1045",
-      name: "Complemento_2",
+      id: "4020",
+      name: "COMPL_d_lr",
       method: "p ∧ ∼p ⇔ ⊥",
     },
     {
-      id: "1046",
-      name: "Complemento_2",
+      id: "4021",
+      name: "COMPL_d_rl",
       method: "⊥ ⇔ p ∧ ∼p",
     },
     {
-      id: "1047",
-      name: "Condicional",
+      id: "4022",
+      name: "COMPL_F_lr",
+      method: "∼⊥ ⇔ ⊤",
+    },
+    {
+      id: "4023",
+      name: "COMPL_F_rl",
+      method: "⊤ ⇔ ∼⊥",
+    },
+    {
+      id: "4024",
+      name: "COMPL_V_lr",
+      method: "∼⊤ ⇔ ⊥",
+    },
+    {
+      id: "4025",
+      name: "COMPL_V_rl",
+      method: "⊥ ⇔ ∼⊤",
+    },
+    {
+      id: "4026",
+      name: "COND_lr",
       method: "p → q ⇔ ∼p ∨ q",
     },
     {
-      id: "1048",
-      name: "Condicional",
+      id: "4027",
+      name: "COND_rl",
       method: "∼p ∨ q ⇔ p → q",
     },
     {
-      id: "1049",
-      name: "Contrapositiva",
+      id: "4028",
+      name: "CP_lr",
       method: "p → q ⇔ ∼q → ∼p",
     },
     {
-      id: "1050",
-      name: "Contrapositiva",
+      id: "4029",
+      name: "CP_rl",
       method: "∼q → ∼p ⇔ p → q",
     },
     {
-      id: "1051",
-      name: "Morgan_c",
-      method: "∼(p ∧ q) ⇔ ∼p ∨ ∼q",
-    },
-    {
-      id: "1052",
-      name: "Morgan_c",
-      method: "∼p ∨ ∼q ⇔ ∼(p ∧ q)",
-    },
-    {
-      id: "1053",
-      name: "Morgan_d",
-      method: "∼(p ∨ q) ⇔ ∼p ∧ ∼q",
-    },
-    {
-      id: "1054",
-      name: "Morgan_d",
-      method: "∼p ∧ ∼q ⇔ ∼(p ∨ q)",
-    },
-    {
-      id: "1055",
-      name: "Distr._c",
+      id: "4030",
+      name: "DISc_lr",
       method: "p ∧ (q ∨ r) ⇔ (p ∧ q) ∨ (p ∧ r)",
     },
     {
-      id: "1056",
-      name: "Distr._c",
+      id: "4031",
+      name: "DISc_rl",
       method: "(p ∧ q) ∨ (p ∧ r) ⇔ p ∧ (q ∨ r)",
     },
     {
-      id: "1057",
-      name: "Distr._c2",
+      id: "4032",
+      name: "DISTc2_lr",
       method: "(p ∧ q) ∨ (r ∧ s) ⇔ (p ∨ (r ∧ s)) ∧ (q ∨ (r ∧ s))",
     },
     {
-      id: "1058",
-      name: "Distr._c2",
+      id: "4033",
+      name: "DISTc2_rl",
       method: "(p ∨ (r ∧ s)) ∧ (q ∨ (r ∧ s)) ⇔ (p ∧ q) ∨ (r ∧ s)",
     },
     {
-      id: "1059",
-      name: "Distr._d",
+      id: "4034",
+      name: "DISTd_lr",
       method: "p ∨ (q ∧ r) ⇔ (p ∨ q) ∧ (p ∨ r)",
     },
     {
-      id: "1060",
-      name: "Distr._d",
+      id: "4035",
+      name: "DISTd_rl",
       method: "(p ∨ q) ∧ (p ∨ r) ⇔ p ∨ (q ∧ r)",
     },
     {
-      id: "1061",
-      name: "Distr._d2",
+      id: "4036",
+      name: "DISTd2_lr",
       method: "(p ∨ q) ∧ (r ∨ s) ⇔ (p ∧ (r ∨ s)) ∨ (q ∧ (r ∨ s))",
     },
     {
-      id: "1062",
-      name: "Distr._d2",
+      id: "4037",
+      name: "DISTd2_rl",
       method: "(p ∧ (r ∨ s)) ∨ (q ∧ (r ∨ s)) ⇔ (p ∨ q) ∧ (r ∨ s)",
     },
     {
-      id: "1063",
-      name: "Distr._cc",
+      id: "4038",
+      name: "DISTcc_lr",
       method: "p → (q ∧ r) ⇔ (p → q) ∧ (p → r)",
     },
     {
-      id: "1064",
-      name: "Distr._cc",
+      id: "4039",
+      name: "DISTcc_rl",
       method: "(p → q) ∧ (p → r) ⇔ p → (q ∧ r)",
     },
     {
-      id: "1065",
-      name: "Distr._dc",
+      id: "4040",
+      name: "DISTdc_lr",
       method: "p → (q ∨ r) ⇔ (p → q) ∨ (p → r)",
     },
     {
-      id: "1066",
-      name: "Distr._dc",
+      id: "4041",
+      name: "DISTdc_rl",
       method: "(p → q) ∨ (p → r) ⇔ p → (q ∨ r)",
     },
     {
-      id: "1067",
-      name: "Dupla negação",
+      id: "4042",
+      name: "DM_c_lr",
+      method: "∼(p ∧ q) ⇔ ∼p ∨ ∼q",
+    },
+    {
+      id: "4043",
+      name: "DM_c_rl",
+      method: "∼p ∨ ∼q ⇔ ∼(p ∧ q)",
+    },
+    {
+      id: "4044",
+      name: "DM_d_lr",
+      method: "∼(p ∨ q) ⇔ ∼p ∧ ∼q",
+    },
+    {
+      id: "4045",
+      name: "DM_d_rl",
+      method: "∼p ∧ ∼q ⇔ ∼(p ∨ q)",
+    },
+    {
+      id: "4046",
+      name: "DN_lr",
       method: "∼∼p ⇔ p",
     },
     {
-      id: "1068",
-      name: "Dupla negação",
+      id: "4047",
+      name: "DN_rl",
       method: "p ⇔ ∼∼p",
     },
     {
-      id: "1069",
-      name: "Exportação-importação",
+      id: "4048",
+      name: "E_I_lr",
       method: "(p ∧ q) → r ⇔ p → (q → r)",
     },
     {
-      id: "1070",
-      name: "Exportação-importação",
+      id: "4049",
+      name: "E_I_rl",
       method: "p → (q → r) ⇔ (p ∧ q) → r",
     },
     {
-      id: "1071",
-      name: "Idempotência_c",
+      id: "4050",
+      name: "IDEMP_c_lr",
       method: "p ∧ p ⇔ p",
     },
     {
-      id: "1072",
-      name: "Idempotência_c",
+      id: "4051",
+      name: "IDEMP_c_rl",
       method: "p ⇔ p ∧ p",
     },
     {
-      id: "1073",
-      name: "Idempotência_d",
+      id: "4052",
+      name: "IDEMP_d_lr",
       method: "p ∨ p ⇔ p",
     },
     {
-      id: "1074",
-      name: "Idempotência_d",
+      id: "4053",
+      name: "IDEMP_d_rl",
       method: "p ⇔ p ∨ p",
     },
     {
-      id: "1075",
-      name: "Identidade_cc",
+      id: "4054",
+      name: "IDENT_cc_lr",
       method: "p ∧ ⊥ ⇔ ⊥",
     },
     {
-      id: "1076",
-      name: "Identidade_cc",
+      id: "4055",
+      name: "IDENT_cc_rl",
       method: "⊥ ⇔ p ∧ ⊥",
     },
     {
-      id: "1077",
-      name: "Identidade_ct",
+      id: "4056",
+      name: "IDENT_ct_lr",
       method: "p ∧ ⊤ ⇔ p",
     },
     {
-      id: "1078",
-      name: "Identidade_ct",
+      id: "4057",
+      name: "IDENT_ct_rl",
       method: "p ⇔ p ∧ ⊤",
     },
     {
-      id: "1079",
-      name: "Identidade_dc",
+      id: "4058",
+      name: "IDENT_dc_lr",
       method: "p ∨ ⊥ ⇔ p",
     },
     {
-      id: "1080",
-      name: "Identidade_dc",
+      id: "4059",
+      name: "IDENT_dc_rl",
       method: "p ⇔ p ∨ ⊥",
     },
     {
-      id: "1081",
-      name: "Identidade_dt",
+      id: "4060",
+      name: "IDENT_dt_lr",
       method: "p ∨ ⊤ ⇔ ⊤",
     },
     {
-      id: "1082",
-      name: "Identidade_dt",
+      id: "4061",
+      name: "IDENT_dt_rl",
       method: "⊤ ⇔ p ∨ ⊤",
     },
     {
-      id: "1083",
-      name: "Neg. condicional",
-      method: "p ∨ ⊤ ⇔ ⊤",
-    },
-    {
-      id: "1084",
-      name: "Neg. condicional",
-      method: "⊤ ⇔ p ∨ ⊤",
-    },
-    {
-      id: "1085",
-      name: "Neg. condicional",
+      id: "4062",
+      name: "NEG_COND_lr",
       method: "∼(p → q) ⇔ p ∧ ∼q",
     },
     {
-      id: "1086",
-      name: "Neg. condicional",
+      id: "4063",
+      name: "NEG_COND_rl",
       method: "p ∧ ∼q ⇔ ∼(p → q)",
     },
     {
-      id: "1087",
-      name: "Troca premissas",
+      id: "4064",
+      name: "TP_lr",
       method: "p → (q → r) ⇔ q → (p → r)",
     },
     {
-      id: "1088",
-      name: "Troca premissas",
+      id: "4065",
+      name: "TP_rl",
       method: "q → (p → r) ⇔ p → (q → r)",
     },
   ] as EquivalenceRule[],

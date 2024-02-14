@@ -8,6 +8,7 @@ import InputForm from './InputForm'
 import { prove_validation } from '../../validations/interface/InterfaceValidation'
 import { ContextMrplato } from '../../context/ContextMrplato'
 import { REMOVE_LAST_LINE_FROM_LIST, RESET_LIST_NEW_LINES } from '../../api/types'
+import { restart_session } from '../../api/Session.api'
 
 
 interface Layer3Props {
@@ -44,31 +45,33 @@ const Layer3: React.FC<Layer3Props> = ({selectedRows, selectRow, handleFunction,
   const context = useContext(ContextMrplato);
   const { stateMrplato, dispatchMrplato } = context || {};
 
-  const listRuleForActiveAddButton0 = [1008]
-  const listRuleForActiveAddButton = [1012,1013]
-  const listRuleForActiveRemoveButton = [1009]
-  const listRuleForActiveReduceButton = [1010]
-
+  const listRuleForActiveAddButton0 = [5000]
+  const listRuleForActiveAddButton = [1001,1002]
+  const listRuleForActiveRemoveButton = [5001]
+  const listRuleForActiveReduceButton = [5002]
+  const buttonActiveRuleList = ["2","3","4"]
 
   const activeAdd0 = listRuleForActiveAddButton0.includes(selectedRule)
   const activeAdd = listRuleForActiveAddButton.includes(selectedRule)
   const activeRemove = listRuleForActiveRemoveButton.includes(selectedRule)
   const activeReduce = listRuleForActiveReduceButton.includes(selectedRule)
+  const buttonActiveRuleStatus = buttonActiveRuleList.includes(buttonActiveRule)
 
   let validate = prove_validation(String(selectedRule), selectedRows)
 
+    
 
+  const size_proposotion =  stateMrplato.info_exercise && stateMrplato.info_exercise.premisses.length
+  
   
 
   return (
     <div>
       <div className={styles.containerConclusion}>
-        {buttonActiveRule === "3" &&
-        <ButtonSelect text='Select' onclick={()=>handleFunction.handleOpenTableSelect()}/>
-      }
+
         { !openInputForm &&
         <div className={styles.conclusion}>
-            <p>⊢ {questionProposition && questionProposition.conclusion}</p>
+            <p>⊢ {stateMrplato.info_exercise && stateMrplato.info_exercise.conclusion}</p>
         </div>
         }
         </div>
@@ -78,14 +81,13 @@ const Layer3: React.FC<Layer3Props> = ({selectedRows, selectRow, handleFunction,
         <ul className={styles.containerProposition}>
 
 
-            {questionProposition && questionProposition.list.map((content, index)=>(
-            <ButtonProposition handleFuntionSelectRuleIndex={()=>{}} questionPropostionDiv={true} color="" setListSelect={selectRow} listSelect={selectedRows} select={""} id={index} index={`${index}`} method={""} name={content} onClick={()=>{}} type='default' typeActive={false}  />
+            {stateMrplato.info_exercise && stateMrplato.info_exercise.premisses.map((element: {content: string, methods_used_info: string, type:string }, index:number)=>(
+            <ButtonProposition handleFuntionSelectRuleIndex={()=>{}} questionPropostionDiv={true} color="" setListSelect={selectRow} listSelect={selectedRows} select={""} id={index} index={`${index}`} method={""} name={element.content} onClick={()=>{}} type='default' typeActive={false}  />
             ))}
-
-
             <hr />
-            {stateMrplato.new_lines_list && questionProposition && stateMrplato.new_lines_list.map((element: {content: string, methods_used_info: string, type:string }, index:number)=>(
-            <ButtonProposition handleFuntionSelectRuleIndex={()=>{}} questionPropostionDiv={false} color="" setListSelect={selectRow} listSelect={selectedRows} select={""} id={index + questionProposition.list.length} index={`${index + questionProposition.list.length}`} method={element.methods_used_info} name={element.content} onClick={()=>{}} type={element.type} typeActive={false}  />
+            {stateMrplato.lines_list && stateMrplato.lines_list.map((element: {content: string, methods_used_info: string, type:string }, index:number)=>(<>{element.methods_used_info !== "P" &&
+            <ButtonProposition handleFuntionSelectRuleIndex={()=>{}} questionPropostionDiv={false} color="" setListSelect={selectRow} listSelect={selectedRows} select={""} id={index + size_proposotion} index={`${index + size_proposotion}`} method={element.methods_used_info} name={element.content} onClick={()=>{}} type={element.type} typeActive={false}  />
+            }</>
             ))}
 
 
@@ -94,28 +96,32 @@ const Layer3: React.FC<Layer3Props> = ({selectedRows, selectRow, handleFunction,
         {openTableSelectForm && 
         <ul className={styles.containerProposition}>
         {stateMrplato.get_selected_options && stateMrplato.get_selected_options.map((element: {content: string, methods_used_info: string, type:string }, index: number)=>(
-            <ButtonProposition handleFuntionSelectRuleIndex={()=>{}} is_selected_form={true} questionPropostionDiv={false} color="#33997F" setListSelect={selectRow} listSelect={selectedRows} select={""} id={index + 1000} index={`${index}`} method={""} name={element.content} onClick={(e)=>{handleFunction.handleSelectFormFunction(e);
+            <ButtonProposition handleFuntionSelectRuleIndex={()=>{}} is_selected_form={true} questionPropostionDiv={false} color="#33997F" setListSelect={()=>{}} listSelect={selectedRows} select={""} id={index + 1000} index={`${index}`} method={""} name={element.content} onClick={(e)=>{handleFunction.handleSelectFormFunction(e);
             }} type='default' typeActive={false}  />
             ))}
         </ul>
         }
 
         {
-          openInputForm ? activeAdd0 ?
-
-          <InputForm handleAdd={handleFunction.handleAddhypothesisOnlyAdd} setOpenInputForm={setOpenInputForm} handleInputTextInputFormClear={handleFunction.handleInputTextInputFormClear} inputTextInputForm={inputTextInputForm} handleInputTextInputForm={handleFunction.handleInputTextInputForm}/> :
-
-          <InputForm handleAdd={handleFunction.handleaddHypothesisRuleFunction} setOpenInputForm={setOpenInputForm} handleInputTextInputFormClear={handleFunction.handleInputTextInputFormClear} inputTextInputForm={inputTextInputForm} handleInputTextInputForm={handleFunction.handleInputTextInputForm}/> 
+          openInputForm ? 
+          <InputForm handleAdd={handleFunction.handleAddhypothesisOnlyAdd} setOpenInputForm={setOpenInputForm} handleInputTextInputFormClear={handleFunction.handleInputTextInputFormClear} inputTextInputForm={inputTextInputForm} handleInputTextInputForm={handleFunction.handleInputTextInputForm}/> 
           :
         
 
-        <div className={styles.containerButtonOperation}>`
+        <div className={styles.containerButtonOperation}>
+          <div className={styles.containerButtonOperationGroup}>
           { 
-            !activeAdd && !activeAdd0 && !activeRemove && !activeReduce &&
+            !activeAdd && !activeAdd0 && !activeRemove && !activeReduce && !buttonActiveRuleStatus &&
             <ButtonOperation disabled={ validate.status ? false : true}  text='PROVE' onclick={()=>{handleFunction.handleProve()}}/>
 
           }
-          {buttonActiveRule === "1" && activeAdd0 &&
+
+          { 
+            !activeAdd && !activeAdd0 && !activeRemove && !activeReduce &&  buttonActiveRuleStatus &&
+            <ButtonOperation disabled={ validate.status ? false : true}  text='SELECT' onclick={()=>{handleFunction.handleOpenTableSelect()}}/>
+
+          }
+          {buttonActiveRule === "0" && activeAdd0 &&
             <ButtonOperation disabled={false} text='ADD' onclick={()=>{handleFunction.handleAddhypothesis()}}/>
 
           }
@@ -124,19 +130,22 @@ const Layer3: React.FC<Layer3Props> = ({selectedRows, selectRow, handleFunction,
             <ButtonOperation disabled={ validate.status ? false : true} text='ADD' onclick={()=>{handleFunction.handleAddhypothesis()}}/>
 
           }
-          {buttonActiveRule === "1" && activeRemove &&
-            <ButtonOperation disabled={false} text='REMOVE' onclick={()=>{handleFunction.handleRemoveHypothesisFunction()}}/>
+          {buttonActiveRule === "0" && activeRemove &&
+            <ButtonOperation disabled={false} text='REMOVE' onclick={()=>{handleFunction.handleProve()}}/>
 
           }
-          {buttonActiveRule === "1" && activeReduce &&
+          {buttonActiveRule === "0" && activeReduce &&
 
-            <ButtonOperation disabled={false}  text='REDUCE' onclick={()=>{handleFunction.handleReduceAbsurdeFunction()}}/>
+            <ButtonOperation disabled={false}  text='REDUCE' onclick={()=>{handleFunction.handleProve()}}/>
           }
             <ButtonOperation disabled={false} text='RESTART' onclick={()=>{
               handleFunction.handleRestart()
+              restart_session()
               dispatchMrplato({type:RESET_LIST_NEW_LINES})}}/>
             <ButtonOperation disabled={false}  text='BACK' onclick={()=>{dispatchMrplato({type:REMOVE_LAST_LINE_FROM_LIST})}}/>
             <ButtonOperation disabled={false} text='NEXT' onclick={()=>{}}/>
+
+            </div>
         </div>
         }
 
