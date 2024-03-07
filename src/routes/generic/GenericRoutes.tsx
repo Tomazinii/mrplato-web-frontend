@@ -2,6 +2,8 @@ import React from "react";
 import { ContainerRoutes } from "./ContainerRoutes";
 import { Route, Routes } from "react-router-dom";
 import { MiniDrawer } from "../../component/sidebar/MiniDrawer";
+import { CheckAuthentication } from "../../middleware/checkAuthentication";
+import { ClassroomProvider } from "../../context/ContextClassroom";
 
 export default function GenericRoutes() {
     const [mobilemode, setMobilemode] = React.useState<boolean>()
@@ -28,7 +30,10 @@ export default function GenericRoutes() {
   
     // Restante do seu componente
 
-  return (<>
+  return (
+  <CheckAuthentication>
+    <ClassroomProvider>
+  
           {mobilemode ? 
           <ContainerRoutes />
           :
@@ -36,6 +41,7 @@ export default function GenericRoutes() {
             <ContainerRoutes />
           </MiniDrawer>
         }
-        </>
+        </ClassroomProvider>
+        </CheckAuthentication>
   );
 }

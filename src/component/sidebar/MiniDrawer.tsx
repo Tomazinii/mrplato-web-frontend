@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useContext } from 'react';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -34,6 +34,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 // @ts-ignore
 import logo from '../../asset/logo.svg';
 import { Link } from 'react-router-dom';
+import { ContextUser } from '../../context/ContenxtUser';
 
 const drawerWidth = 240;
 
@@ -124,6 +125,7 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
   };
 
 
+  const { stateUser, dispatchUser } = useContext(ContextUser) || {} ;
   
 
   return (
@@ -150,12 +152,18 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
 
           </Link>
           <Box sx={{ display: { xs: 'none', md: 'flex' }, }}>
-           
+            {stateUser && stateUser.is_admin && 
+          <Link to={"/mrplato-admin/classrooms"}>
+            <IconButton  size="large" aria-label="show 4 new mails">
+                <p style={{fontSize:"1.2rem", marginLeft:"5px"}}>ADMIN</p>
+            </IconButton>
+            </Link>
+           }
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label=""
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={1} color="error">
                 
                 <NotificationsIcon />
               </Badge>
@@ -172,10 +180,11 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
               
               <AccountCircle />
             </IconButton>
+            <Link to={"/settings"}>
             <IconButton  size="large" aria-label="show 4 new mails">
-                <EmojiEventsIcon style={{color:"#B87B00"}}/>
-                <p style={{fontSize:"1.2rem", marginLeft:"5px"}}>200</p>
+                <p style={{fontSize:"1.2rem", marginLeft:"5px"}}>{stateUser && stateUser.user_name}</p>
             </IconButton>
+            </Link>
           </Box>
           </div>
         </Toolbar>

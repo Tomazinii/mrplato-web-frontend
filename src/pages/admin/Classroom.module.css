@@ -1,0 +1,9 @@
+
+.container{
+    display: flex;
+    height: 100vh;
+    margin-top: 70px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+

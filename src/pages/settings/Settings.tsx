@@ -1,12 +1,21 @@
 
-import React from "react"
+import React, { useContext } from "react"
 
 import styles from './Settings.module.css'
 import TextField from '@mui/material/TextField';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import { Divider } from "@mui/material";
+import { logoutFunction } from "../../utils/user/userFuction";
+import { ContextUser } from "../../context/ContenxtUser";
+import { useNavigate } from "react-router-dom";
 const Settings = ()=>{
+    const { stateUser, dispatchUser } = useContext(ContextUser) || {} ;
+    const navigate = useNavigate();
+    const logout = ()=>{
+        logoutFunction(dispatchUser)
+        navigate("/login")
+    }
 
     return(
         <div className={styles.container}>
@@ -51,6 +60,10 @@ const Settings = ()=>{
 
                         <Button variant="contained">Change</Button>
 
+                        <Divider />
+                        <h3>Exit</h3>
+
+                        <Button onClick={()=>{logout()}} style={{backgroundColor:"#6e0606"}} variant="contained">Logout</Button>
         </div>  
 
         </div>

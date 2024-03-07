@@ -4,6 +4,7 @@
     margin-top: 50px;
     gap: 20px;
     align-items: center;
+    font-family: "default";
 }
 
 .inputbox{
@@ -22,4 +23,36 @@
     gap: 40px;
     justify-content: center;
     align-items: center;
+}
+
+.inputLoginIntern{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.inputField{
+    background-color: #333;
+    color: white;
+    border: none;
+    height: 70%;
+    font-size: 1.2rem;
+    font-family: "default";
+    width: 90%;
+    
+}
+.inputField:focus {
+    outline: none;
+}
+
+.error{
+    color: #6e0606;
+}
+
+.button{
+    border: none;
+    width: 100%;
+    font-family: "default";
+    cursor: pointer;
+    font-size: 1.2rem;
 }
