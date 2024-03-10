@@ -9,26 +9,17 @@ import NotFound from "../NotFound/NotFound";
 
 export default function ListExercise({stateExercise}: any) {
     const {idLista} = useParams()
-
- 
     
     
     React.useEffect(() => {
+        
+
         window.scrollTo(0, 0);
     
       }, []);
 
-      
-
-      if(isNaN(Number(idLista)) || stateExercise.question[Number(idLista)] === undefined) {
-        
-        return <NotFound/>
-        
-    }   
-
-    const params = Number(idLista)
+    const data = stateExercise.activity_list && stateExercise.activity_list.find((element: any) => element.id === idLista)
     
-
     return (
         <div className={styles.container}>
             
@@ -36,7 +27,7 @@ export default function ListExercise({stateExercise}: any) {
             <h1 className={styles.title}>Lista</h1>
                 <div className={styles.boxlistMaster}>
                 { 
-                    stateExercise.question && stateExercise.question[params].data.map((content: any, index: number) => (
+                    data && data.problem && data.problem.map((content: any, index: number) => (
                     <Link
                         to={`${index}`}
                         key={index}

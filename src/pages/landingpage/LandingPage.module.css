@@ -1,4 +1,56 @@
 
 .container{
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "default";
+    color: #333;
+}
+
+.center{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.text{
+    width: 40%;
+    margin-top: 20px;
+    display: flex;
+    text-align: left;
+    justify-content: center;
+}
+
+
+.container{
+    background-image: url("../../asset/landing2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+
+.containerBox{
+    margin-top: 10px;
+    gap: 20px;
+    display: flex;
+}
+
+.box{
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    height: 200px;
+
+    background-position: center;
+    background-size: contain;
+    width: 200px;
+}
+
+.containerBoxMaster{
+    margin-top: 50px;
 }

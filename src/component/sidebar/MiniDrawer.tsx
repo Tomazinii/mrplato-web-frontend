@@ -35,6 +35,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import logo from '../../asset/logo.svg';
 import { Link } from 'react-router-dom';
 import { ContextUser } from '../../context/ContenxtUser';
+import { SchoolRounded } from '@mui/icons-material';
 
 const drawerWidth = 240;
 
@@ -357,6 +358,29 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
         <ListItemText primary={"Score"} sx={{ opacity: open ? 1 : 0 }} />
       </ListItemButton>
     </ListItem>
+    <Link to="/settings">
+    <ListItem disablePadding sx={{ display: 'block' }}>
+      <ListItemButton
+        sx={{
+          minHeight: 48,
+          justifyContent: open ? 'initial' : 'center',
+          px: 2.5,
+        }}
+      >
+        <ListItemIcon
+         style={{color:"#2D2D2D"}} 
+          sx={{
+            minWidth: 0,
+            mr: open ? 3 : 'auto',
+            justifyContent: 'center',
+          }}
+        >
+          <SchoolRounded />
+        </ListItemIcon>
+        <ListItemText primary={"Classroom"} sx={{ opacity: open ? 1 : 0 }} />
+      </ListItemButton>
+    </ListItem>
+    </Link>
     <Link to="/settings">
     <ListItem disablePadding sx={{ display: 'block' }}>
       <ListItemButton

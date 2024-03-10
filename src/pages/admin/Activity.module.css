@@ -1,0 +1,22 @@
+
+
+.active{
+}
+
+.deactive{
+    opacity: 50%;
+    background-color: rgb(231, 231, 231);
+}
+
+
+.custom {
+    /* Adicione seus estilos personalizados aqui */
+    border: 1px solid #348ed8;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #3c393f;
+    width: 100%;
+    box-sizing: border-box;
+  }

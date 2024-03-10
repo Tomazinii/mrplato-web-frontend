@@ -131,3 +131,29 @@ export const register_student = async (props: inputRegisterStudentProps) => {
 };
 
 
+export interface GetActivityProps {
+  classroom_id: string;
+}
+
+export const get_activity_by_classroom = async (props: GetActivityProps) => {
+      const {classroom_id} = props
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      };
+
+      
+
+      try {
+        const res = (await axios.get(URL + PATH_DEFAULT + `/get_activity_by_classroom/${classroom_id}`, config));
+        const data = res.data
+        return {data:data, success: true};
+      } catch (err: any) {
+        const errMsg = err.response.data.detail
+        return {data:errMsg, success: false};
+      }
+  };
+  
+  

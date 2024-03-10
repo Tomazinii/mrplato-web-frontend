@@ -20,14 +20,16 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import ModeIcon from '@mui/icons-material/Mode';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styles from './DrawerClassroom.module.css'
 const drawerWidth = 240;
 
 export default function DrawerClassroom({children, link_active}: any) {
+  const params = useParams()
+  
     
   return (
-    <Box fontFamily={"default"} color={"#333"} sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -54,7 +56,7 @@ export default function DrawerClassroom({children, link_active}: any) {
         <Toolbar />
         <Divider />
         <List>
-            <Link to={"/mrplato-admin/classrooms/turma-a/invite"}>
+            <Link to={`/mrplato-admin/classrooms/${params.idTurma}/invite`}>
             <ListItem className={link_active === "invite" && styles.active} disablePadding>
               <ListItemButton   >
                 <ListItemIcon>
@@ -64,8 +66,8 @@ export default function DrawerClassroom({children, link_active}: any) {
               </ListItemButton>
             </ListItem>
             </Link>
-            <Link to={"activity"}>
-            <ListItem disablePadding>
+            <Link  to={`/mrplato-admin/classrooms/${params.idTurma}/activity`}>
+            <ListItem className={link_active === "activity" && styles.active}  disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                   <ModeIcon /> 

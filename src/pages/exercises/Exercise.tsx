@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 
 import styles from './Exercises.module.css'
 import { Link } from "react-router-dom";
@@ -7,12 +7,13 @@ import CreateIcon from '@mui/icons-material/Create';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 export default function Exercise({stateExercise}:any) {
 
-    let new_list_exercise = [{content:{availability: true, slug: "teste"}}]
     React.useEffect(() => {
         window.scrollTo(0, 0);
-    
       }, []);
-    
+
+      console.log(stateExercise.activity_list);
+      
+
 
     return (
         <div className={styles.container}>
@@ -20,13 +21,14 @@ export default function Exercise({stateExercise}:any) {
         <div className={styles.container}>
             <h1 className={styles.title}>Exercises</h1>
                 <div className={styles.boxlistMaster}>
+                    
                 {
-                    stateExercise.question && stateExercise.question.map((content: any, index: number) => (
+                    stateExercise.activity_list && stateExercise.activity_list.map((content: any, index: number) => (
                     <Link
                         onClick={() => {
-                        localStorage.setItem("LISTID", content.id);
+                        localStorage.setItem("LISTID", stateExercise.activity_list && content.id);
                         }}
-                        to={stateExercise.question ? `${index}` : ""}
+                        to={stateExercise.activity_list && content.availability ? `${stateExercise.activity_list && content.id}` : ""}
                         key={index}
                         className={`${styles.boxlist} ${
                         content.availability ? "" : ""
@@ -34,8 +36,9 @@ export default function Exercise({stateExercise}:any) {
                     >
                         
                         <CreateIcon/>
-                        <p>{content.name}</p>
-                        {true ? (
+                        <p>{stateExercise.activity_list && content.problem_name}</p>
+                        <p>expires in {stateExercise.activity_list && new Date(content.time).toLocaleString('pt-BR')}</p>
+                        {stateExercise.activity_list && content.availability ? (
                         <KeyboardArrowRightIcon/>
                         ) : (
                             <LockIcon />

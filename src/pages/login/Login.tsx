@@ -53,7 +53,7 @@ const Login = ()=>{
       }
 
       if (stateUser.is_authenticated === true) {
-        return <Navigate to="/" />;
+        return <Navigate to="/home  " />;
       }
 
 

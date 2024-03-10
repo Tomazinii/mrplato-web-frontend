@@ -4,7 +4,7 @@ import DrawerClassroom from '../../component/admin/DrawerClassroom';
 
 export default function ClassroomElement() {
   return (
-    <DrawerClassroom>
+    <DrawerClassroom >
       <p>teste</p>
     </DrawerClassroom>
    

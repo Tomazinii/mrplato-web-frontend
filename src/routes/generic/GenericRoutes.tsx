@@ -31,8 +31,8 @@ export default function GenericRoutes() {
     // Restante do seu componente
 
   return (
-  <CheckAuthentication>
     <ClassroomProvider>
+      <CheckAuthentication>
   
           {mobilemode ? 
           <ContainerRoutes />
@@ -41,7 +41,7 @@ export default function GenericRoutes() {
             <ContainerRoutes />
           </MiniDrawer>
         }
-        </ClassroomProvider>
         </CheckAuthentication>
+      </ClassroomProvider>
   );
 }

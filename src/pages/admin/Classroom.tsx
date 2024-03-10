@@ -99,7 +99,7 @@ export default function Classroom() {
         <div className={styles.container}>
           {stateClassroom && stateClassroom.classrooms_list.map((content: any)=>(
 
-            <ButtonClassroom title={content.class_name}  text="" path={content.id}/>
+            <ButtonClassroom title={content.class_name}  text="" path={`${content.id}/invite`}/>
             ))}
             <ButtonClassroomAdd text='' path='create'/>
         </div>

@@ -16,29 +16,24 @@ import ClassroomElement from "../../pages/admin/ClassroomElement";
 import Invite from "../../pages/admin/Invite";
 import { ContextUser } from "../../context/ContenxtUser";
 import ClassroomCreate from "../../pages/admin/ClassroomCreate";
+import Activity from "../../pages/admin/Activity";
+import { getActivityFunctions, inputgetActivityFunctionsProps } from "../../utils/classroom/getActivitiesFunctions";
+import { ContextClassroom } from "../../context/ContextClassroom";
 
 
 export function ContainerRoutes() {
   const {stateExercise, dispatchExercise} = useContext(ContextExercises) || {} 
+  const {stateClassroom, dispatchClassroom} = useContext(ContextClassroom) || {}
   const { stateUser, dispatchUser } = useContext(ContextUser) || {} ;
 
   
-
-  React.useEffect(()=>{
-    get_exercise().then((data)=>{
-        dispatchExercise({type: GET_EXERCISE, payload: data})
-    })
-  },[])
-
-  
-
   return (
     <MrplatoProvider>
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/exercises/" element={<Exercise stateExercise={stateExercise}/>} />
-        <Route path="/exercises/:idLista/" element={<ListExercise stateExercise={stateExercise}/>} />
+        <Route path="/exercises/" element={<Exercise stateExercise={stateClassroom}/>} />
+        <Route path="/exercises/:idLista/" element={<ListExercise stateExercise={stateClassroom}/>} />
 
         {stateExercise.question && 
         <Route path="/exercises/:idLista/:idQuestion/" element={<Interface stateExercise={stateExercise} />} />
@@ -59,7 +54,7 @@ export function ContainerRoutes() {
               <Route path="/mrplato-admin/classrooms/:idTurma/invite" element={< Invite/>} />
             }
       {stateUser && stateUser.is_admin &&
-              <Route path="/mrplato-admin/classrooms/:idTurma/invite" element={< Invite/>} />
+              <Route path="/mrplato-admin/classrooms/:idTurma/activity" element={< Activity/>} />
       }
       {stateUser && stateUser.is_admin &&
               <Route path="/mrplato-admin/classrooms/create" element={< ClassroomCreate/>} />
