@@ -17,17 +17,17 @@ interface feedBackProps {
 }
 
 const FeedBack: React.FC<feedBackProps> = ({feedbackType, message, openFeedbackAlert, setOpenFeedbackAlert}) =>{
-    const time = 4000
+    const time = 20000
 
 
-    const vertical = "bottom"
+    const vertical = "top"
     const horizontal = "center"
   return (
     <div className={styles.containerFeedback}>
 
         {feedbackType === "Error" &&
-        <Snackbar anchorOrigin={{ vertical, horizontal }} open={openFeedbackAlert} autoHideDuration={time} onClose={()=>{setOpenFeedbackAlert(false)}}>
-            <Alert style={{width:"100%"}} onClose={()=>{setOpenFeedbackAlert(false)}} severity="error">
+        <Snackbar style={{ top: '80px' , width:"80%"}} anchorOrigin={{ vertical, horizontal }} open={openFeedbackAlert} autoHideDuration={time} onClose={()=>{setOpenFeedbackAlert(false)}}>
+            <Alert className={styles.logerror}  style={{width:"100%"}} onClose={()=>{setOpenFeedbackAlert(false)}} variant='filled' severity="error">
             <AlertTitle>Error</AlertTitle>
             {message}
             </Alert>
@@ -36,8 +36,8 @@ const FeedBack: React.FC<feedBackProps> = ({feedbackType, message, openFeedbackA
 
 
         {feedbackType === "Info" &&
-        <Snackbar  anchorOrigin={{ vertical, horizontal }}  open={openFeedbackAlert} autoHideDuration={time} onClose={()=>{setOpenFeedbackAlert(false)}}>
-            <Alert style={{width:"100%"}} onClose={()=>{setOpenFeedbackAlert(false)}}  severity="info">
+        <Snackbar style={{ top: '80px' , width:"80%"}}  anchorOrigin={{ vertical, horizontal }}  open={openFeedbackAlert} autoHideDuration={time} onClose={()=>{setOpenFeedbackAlert(false)}}>
+            <Alert style={{width:"100%"}} onClose={()=>{setOpenFeedbackAlert(false)}} variant='filled' severity="info">
                 <AlertTitle>Created</AlertTitle>
                 {message}
                 
@@ -47,8 +47,8 @@ const FeedBack: React.FC<feedBackProps> = ({feedbackType, message, openFeedbackA
 
 
         {feedbackType === "Success" &&
-        <Snackbar anchorOrigin={{ vertical, horizontal }}  open={openFeedbackAlert} autoHideDuration={time} onClose={()=>{setOpenFeedbackAlert(false)}}>
-            <Alert style={{width:"100%"}} onClose={()=>{setOpenFeedbackAlert(false)}}  severity="success">
+        <Snackbar style={{ top: '80px' , width:"80%"}} anchorOrigin={{ vertical, horizontal }}  open={openFeedbackAlert} autoHideDuration={time} onClose={()=>{setOpenFeedbackAlert(false)}}>
+            <Alert style={{width:"100%"}} onClose={()=>{setOpenFeedbackAlert(false)}} variant='filled' severity="success">
                 {message}
             </Alert>
       </Snackbar>

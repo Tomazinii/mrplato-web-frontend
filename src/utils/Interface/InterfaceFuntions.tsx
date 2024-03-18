@@ -19,7 +19,7 @@ export interface SelectRowAndRuleInterface {
   selectedRule: number;
   selectedRows: number[];
   pb_index: number
-  list_index: number
+  list_index: string
   
 }
 
@@ -47,8 +47,14 @@ RestartInterface
   buttonActiveRule: any
   selection: number
   input_formula: string
-  pb_index: number,
-  list_index: number
+  pb_index: number
+  list_index: string
+  activity_id: string
+  classroom_id: string
+  problem: string
+  user_id: string
+  setIsCelebrating: any
+  user_status: boolean
  }
 
 
@@ -72,6 +78,7 @@ RestartInterface
   setFeedbackTypeAlert: any
   setFeedbackMessageAlert: any
   setOpenFeedbackAlert: any
+  problem: string
 
 }
 
@@ -96,12 +103,18 @@ export const prove = (props: ProveProps): void => {
         setFeedbackMessageAlert,
         setOpenFeedbackAlert,
         dispatch,
+        setIsCelebrating,
         selectedRuleIndex,
         buttonActiveRule,
         selection,
         input_formula,
         pb_index,
         list_index,
+        activity_id,
+        classroom_id,
+        problem,
+        user_id,
+        user_status
 
 
     } = props;
@@ -124,25 +137,39 @@ export const prove = (props: ProveProps): void => {
         input_formula: input_formula,
         total_or_partial: total_or_partial,
         selection: selection,
-          }
+        activity_id: activity_id,
+        classroom_id: classroom_id,
+        problem:problem,
+        user_id:user_id,
+        user_status: user_status
+        }
 
 
-      apply_rule_router(props_apply_rule_router, dispatch).then((result) => {
-        if(result && result.type_output === "PROVED"){
+      apply_rule_router(props_apply_rule_router, dispatch).then((result: any) => {
+        if (result.success === true) {
+
+        if(result && result.data.body.data.type_output === "PROVED"){
           setFeedbackTypeAlert("Success")
-          setFeedbackMessageAlert(result.message)
+          setFeedbackMessageAlert(result.data.body.data.message)
           setOpenFeedbackAlert(true)
-          dispatch({ type: ADD_NEW_LINES_TO_LIST, payload: result.lines });
+          setIsCelebrating(true)
+          dispatch({ type: ADD_NEW_LINES_TO_LIST, payload: result.data.body.data.lines });
 
-        }else if(result && result.type_output === "CREATED"){
+        }else if(result && result.data.body.data.type_output === "CREATED"){
           setFeedbackTypeAlert("Info")
-          setFeedbackMessageAlert(result.message)
+          setFeedbackMessageAlert(result.data.body.data.message)
           setOpenFeedbackAlert(true)
-          dispatch({ type: ADD_NEW_LINES_TO_LIST, payload: result.lines });
+          dispatch({ type: ADD_NEW_LINES_TO_LIST, payload: result.data.body.data.lines });
           
-        }else if(result && result.type_output === "ERROR"){
+        }else if(result && result.data.body.data.type_output === "ERROR"){
           setFeedbackTypeAlert("Error")
-          setFeedbackMessageAlert(result.message)
+          setFeedbackMessageAlert(result.data.body.data.message)
+          setOpenFeedbackAlert(true)
+        }
+      }
+        else {
+          setFeedbackTypeAlert("Error")
+          setFeedbackMessageAlert(result.data)
           setOpenFeedbackAlert(true)
         }
 
@@ -179,7 +206,8 @@ export const prove = (props: ProveProps): void => {
       list_index,
       setFeedbackTypeAlert,
       setFeedbackMessageAlert,
-      setOpenFeedbackAlert
+      setOpenFeedbackAlert,
+      problem
   } = props;
 
   const validate = prove_validation(String(selectedRule), selectedRows)
@@ -196,30 +224,37 @@ export const prove = (props: ProveProps): void => {
         input_formula: "",
         total_or_partial: "partial",
         selection: 0,
+        problem: problem
         
       } 
 
-
-      get_options_selected_form(props).then((result) => {
-        if(result && result.type_output === "CREATED"){
+      
+      get_options_selected_form(props).then((result: any) => {
+        
+        if(result && result.success){
+        if(result && result.data.body.data && result.data.body.data.type_output === "CREATED"){
           setFeedbackTypeAlert("Info")
-          setFeedbackMessageAlert(result.message)
+          setFeedbackMessageAlert(result.data.body.data.message)
           setOpenFeedbackAlert(true)
 
           
-        dispatch({ type: GET_OPTIONS_SELECTED_FORM, payload: result.lines });
+        dispatch({ type: GET_OPTIONS_SELECTED_FORM, payload: result.data.body.data.lines });
         setOpenTableSelectForm(true)
 
           
-        }else if(result && result.type_output === "ERROR"){
+        }else if(result && result.data.body.data && result.data.body.data.type_output === "ERROR"){
           setFeedbackTypeAlert("Error")
-          setFeedbackMessageAlert(result.message)
+          setFeedbackMessageAlert(result.data.body.data.message)
           setOpenFeedbackAlert(true)
           
+        }}else{
+          setFeedbackTypeAlert("Error")
+          setFeedbackMessageAlert(result.data)
+          setOpenFeedbackAlert(true)
         }
-
       })  
   }else{
+    
     alert(setOpenAlert, setMessageAlert, validate.message);
     
   }
@@ -319,10 +354,10 @@ export const prove = (props: ProveProps): void => {
 
 
 
-  export const CreateSessionExerciseHandle = (props: CreateSessionExercise ,dispatch:any): void => {
+  export const CreateSessionExerciseHandle = (props: any ,dispatch:any): void => {
     
     create_session_exercise(props).then((result)=>{
-
+      
       dispatch({ type: CREATE_SESSION_EXERCISE, payload: result })
     })
 

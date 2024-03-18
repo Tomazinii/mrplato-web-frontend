@@ -99,14 +99,10 @@ function reducer(stateMrplato: StateMrplato, actionMrplato: ActionMrplato) {
 
 
     case CREATE_SESSION_EXERCISE:
-
-    console.log("TESTE",actionMrplato);
-    
-      
         return {
           ...stateMrplato,
-          info_exercise: actionMrplato.payload,
-          lines_list: actionMrplato.payload.new_lines
+          info_exercise: actionMrplato.payload.body.data,
+          lines_list: actionMrplato.payload.body.data.new_lines
         };
 
 

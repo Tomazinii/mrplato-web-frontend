@@ -33,17 +33,23 @@ function Home() {
       <h4 className={styles.h4}>What are you going to deduce today?</h4>
 
     <div className={styles.containerBox}>
-      <div className={styles.doubleMenu}>
+      <div  className={`${styles.doubleMenu} ${styles.disabled}`}>
+      
         <MenuButtonHome text='Practitioner' path='' color='#FEC200' colorLoadtotal='#FFF0BE' image={practitioner} load={false} />
+
         <MenuButtonHome  text='Content' path='' color='#E15E32' colorLoadtotal='#FFD1C2' image={content} load={false}/>
       </div>
-      <div style={{marginTop:"60px"}}>
+      <div  style={{marginTop:"60px"}}>
         <div className={styles.doubleMenu}>
+        <div className={`${styles.disabled}`}>
           <MenuButtonHome  text='Games' path='' color='#26CCB0' colorLoadtotal='#CBFFF6' image={games} load={true}/>
+          </div>
           <MenuButtonHome  text='Challenges' path='' color='#010101' colorLoadtotal='#828282' image={challenge} load={true}/>
         </div>
         <div className={styles.doubleMenu}>
+        <div className={`${styles.disabled}`}>
           <MenuButtonHome  text='Tournament' path='' color='#2637CC' colorLoadtotal='#BCC3FF' image={tournament} load={true}/>
+          </div>
             <MenuButtonHome  text='Exercises' path='/exercises' color='rgb(221, 156, 16)' colorLoadtotal='rgb(243, 206, 127)' image={exercises} load={true}/>
         </div>
       </div>

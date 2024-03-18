@@ -9,6 +9,7 @@ import { prove_validation } from '../../validations/interface/InterfaceValidatio
 import { ContextMrplato } from '../../context/ContextMrplato'
 import { REMOVE_LAST_LINE_FROM_LIST, RESET_LIST_NEW_LINES } from '../../api/types'
 import { restart_session } from '../../api/Session.api'
+import { useNavigate } from 'react-router-dom'
 
 
 interface Layer3Props {
@@ -63,7 +64,9 @@ const Layer3: React.FC<Layer3Props> = ({selectedRows, selectRow, handleFunction,
 
   const size_proposotion =  stateMrplato.info_exercise && stateMrplato.info_exercise.premisses.length
   
-  
+  const navigate = useNavigate()
+  let listid = localStorage.getItem("LISTID")
+  let questionid = Number(localStorage.getItem("idQuestion")) + 1
 
   return (
     <div>
@@ -143,7 +146,13 @@ const Layer3: React.FC<Layer3Props> = ({selectedRows, selectRow, handleFunction,
               restart_session()
               dispatchMrplato({type:RESET_LIST_NEW_LINES})}}/>
             <ButtonOperation disabled={false}  text='BACK' onclick={()=>{dispatchMrplato({type:REMOVE_LAST_LINE_FROM_LIST})}}/>
-            <ButtonOperation disabled={false} text='NEXT' onclick={()=>{}}/>
+            <ButtonOperation disabled={false} text='NEXT' onclick={()=>{
+              handleFunction.handleRestart()
+              restart_session()
+              dispatchMrplato({type:RESET_LIST_NEW_LINES})
+              navigate(`/exercises/${listid}/${questionid}`)
+
+            }}/>
 
             </div>
         </div>

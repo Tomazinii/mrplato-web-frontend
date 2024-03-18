@@ -9,6 +9,7 @@ import RegisterStudent from './pages/user/RegisterStudent'
 import Expired from './pages/user/Expired'
 import {GlobalProvider} from './context/ContextGlobal'
 import LandingPage from './pages/landingpage/LandingPage'
+import { AdminRoutes } from './routes/generic/AdminRoutes';
 
 function App() {
   document.oncopy = function() {
@@ -26,6 +27,7 @@ function App() {
               <Route path='/login' element={<Login/>}/>
               <Route path='/' element={<LandingPage/>}/>
               <Route path="/invite/:idInvite/:idClassroom" element={<RegisterStudent />} />
+              <Route path='/mrplato-admin/*' element={<AdminRoutes/>}/>
               <Route path="/expired" element={<Expired />} />
               <Route path="/*" element={<GenericRoutes />} />
             </Routes>

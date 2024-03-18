@@ -11,8 +11,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import SchoolIcon from '@mui/icons-material/School';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ButtonClassroom from '../../component/admin/ButtonClassroom';
@@ -21,6 +19,8 @@ import ButtonClassroomAdd from '../../component/admin/ButtonClassroomAdd';
 import { getClassroom } from '../../utils/classroom/getClassroomFunctions';
 import { ContextClassroom } from '../../context/ContextClassroom';
 import { ContextUser } from '../../context/ContenxtUser';
+import { logoutFunction } from '../../utils/user/userFuction';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -29,6 +29,15 @@ export default function Classroom() {
   const {stateClassroom , dispatchClassroom} = React.useContext(ContextClassroom) || {};
   const {stateUser, dispatchUser} = React.useContext(ContextUser) || {};
 
+  
+    
+  const navigate = useNavigate();
+  const logout = ()=>{
+      logoutFunction(dispatchUser)
+      navigate("/login")
+  }
+
+  
   React.useEffect(()=>{
     const props = {
       teacher_id: stateUser && stateUser.user_id,
@@ -36,7 +45,8 @@ export default function Classroom() {
     }
     getClassroom(props)
     
-  },[])
+    
+  },[stateUser])
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -77,9 +87,10 @@ export default function Classroom() {
         </List>
 
         <Divider />
-      
+        
         <List>
-            <ListItem disablePadding>
+            <ListItem onClick={()=>{logout();
+            }} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                   <LogoutIcon /> 
@@ -98,8 +109,7 @@ export default function Classroom() {
         
         <div className={styles.container}>
           {stateClassroom && stateClassroom.classrooms_list.map((content: any)=>(
-
-            <ButtonClassroom title={content.class_name}  text="" path={`${content.id}/invite`}/>
+            <ButtonClassroom title={content.class_name}   text="" path={`${content.id}`}/>
             ))}
             <ButtonClassroomAdd text='' path='create'/>
         </div>

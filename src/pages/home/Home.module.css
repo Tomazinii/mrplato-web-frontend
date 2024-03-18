@@ -29,3 +29,6 @@
 .containerBox{
     margin-top: 60px;
 }
+.disabled{
+    opacity: 50%;
+}

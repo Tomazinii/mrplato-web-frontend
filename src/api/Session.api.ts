@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const URL = process.env.REACT_APP_URL;
-const PATH_DEFAULT = "/api/v1/mrplato/operations"
-
+const PATH_DEFAULT = "/api/v1/mrplato"
 
 export const restart_session = async () => {
     // Obtendo os cookies do navegador
@@ -18,7 +17,7 @@ export const restart_session = async () => {
     };
 
     try {
-        const res = await axios.get(URL + PATH_DEFAULT + "/delete_session/", config);
+        const res = await axios.get(URL + PATH_DEFAULT + "/restart_status_mrplato", config);
         // Lide com a resposta, se necessário
     } catch (err) {
         // Lide com erros, se necessário

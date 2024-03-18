@@ -5,15 +5,12 @@ import { Link, useParams } from "react-router-dom";
 import LockIcon from '@mui/icons-material/Lock';
 import CreateIcon from '@mui/icons-material/Create';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import NotFound from "../NotFound/NotFound";
 
 export default function ListExercise({stateExercise}: any) {
     const {idLista} = useParams()
     
     
     React.useEffect(() => {
-        
-
         window.scrollTo(0, 0);
     
       }, []);
@@ -29,6 +26,7 @@ export default function ListExercise({stateExercise}: any) {
                 { 
                     data && data.problem && data.problem.map((content: any, index: number) => (
                     <Link
+                        onClick={()=>{localStorage.setItem('question', content)}}
                         to={`${index}`}
                         key={index}
                         className={`${styles.boxlist} ${

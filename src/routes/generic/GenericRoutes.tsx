@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import { MiniDrawer } from "../../component/sidebar/MiniDrawer";
 import { CheckAuthentication } from "../../middleware/checkAuthentication";
 import { ClassroomProvider } from "../../context/ContextClassroom";
+import { AdminRoutes } from "./AdminRoutes";
 
 export default function GenericRoutes() {
     const [mobilemode, setMobilemode] = React.useState<boolean>()
@@ -33,7 +34,6 @@ export default function GenericRoutes() {
   return (
     <ClassroomProvider>
       <CheckAuthentication>
-  
           {mobilemode ? 
           <ContainerRoutes />
           :

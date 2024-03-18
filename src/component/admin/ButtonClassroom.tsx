@@ -13,7 +13,13 @@ const ButtonClassroom: React.FC<ButtonProps> = ({title, text, path}) =>{
   return (
     
     <Link style={{height:"0px"}} to={path}>
-        <div className={styles.Button} >
+        <div onClick={
+          ()=>{
+            localStorage.setItem("class_name", title)
+            localStorage.setItem("classroom_id", path)
+          }
+
+          } className={styles.Button} >
           <div className={styles.estilo}></div>
           <div className={styles.title}>
           <h2 >{title}</h2>

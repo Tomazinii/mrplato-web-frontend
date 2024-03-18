@@ -1,7 +1,17 @@
 
 .container{
-    display: flex;
     height: 100vh;
     gap: 20px;
 }
 
+
+
+.containerInvites{
+    width: 80%;
+    height: 100vh;
+}
+
+
+.deactive{
+    opacity: 50%;
+}

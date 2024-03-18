@@ -1,19 +1,18 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import styles from './Interface.module.css';
-import ButtonBack from '../../component/buttons/ButtonBack';
 import Layer1 from './Layer1';
 import Layer2 from './Layer2';
 import Layer3 from './Layer3';
 import Alert from './Alert';
-import { addHypothesisOnlyAddFunction, addHypothesisRuleFunction, CreateSessionExerciseHandle, FeedBackAlerteInterface, openSelectFormsProps, openTableSelectFormFunction, prove, ProveProps, reduceAbsurdeFunction, removeHypothesisFunction, restart, selectFormFunction, selectFormsProps} from '../../utils/Interface/InterfaceFuntions';
+import { CreateSessionExerciseHandle, openSelectFormsProps, openTableSelectFormFunction, prove, ProveProps, reduceAbsurdeFunction, removeHypothesisFunction, restart, selectFormFunction, selectFormsProps} from '../../utils/Interface/InterfaceFuntions';
 import FeedBack from './FeedBack';
-import TrasformList from '../../utils/transform';
 import { ContextMrplato } from '../../context/ContextMrplato';
-import { create_session_exercise, CreateSessionExercise, selected_form, SelectFormProps } from '../../api/Mrplato.api';
-import { RESET_LIST_NEW_LINES, SET_LIST_PROPOSITONS } from '../../api/types';
-import NotFound from '../NotFound/NotFound';
+import { RESET_LIST_NEW_LINES } from '../../api/types';
 import { useParams } from 'react-router-dom';
 import { restart_session } from '../../api/Session.api';
+import Confetti from 'react-confetti';
+import { ContextUser } from '../../context/ContenxtUser';
+import { ContextClassroom } from '../../context/ContextClassroom';
 
 
 interface IntrefaceProps {
@@ -21,9 +20,13 @@ interface IntrefaceProps {
 }
 
 
+
+
+
 const Interface: React.FC<IntrefaceProps> = ({stateExercise}) => {
 
   const {idQuestion, idLista} = useParams()
+  
 
   
   const [buttonActiveRule, setButonActiveRule] = React.useState("1")
@@ -40,12 +43,14 @@ const Interface: React.FC<IntrefaceProps> = ({stateExercise}) => {
   const [inputTextInputForm, setInputTextInputForm] = React.useState<any>([])
   const [questionProposition, setQuestionProposition] = React.useState<any>()
   const [optionSelectedForm, setOptionSelectedForm] = React.useState<any>()
-
+  const [isCelebrating, setIsCelebrating] = useState(true);
   
 
   const context = useContext(ContextMrplato);
   const { stateMrplato, dispatchMrplato } = context || {};
   
+  const { stateUser } =  useContext(ContextUser) || {};
+  const { stateClassroom } =  useContext(ContextClassroom) || {};
 
   const selectRow = (index: number) => {
     
@@ -82,7 +87,7 @@ const Interface: React.FC<IntrefaceProps> = ({stateExercise}) => {
     
   
   }
-
+  
   const handleOpenTableSelect = ()=>{
     const props: openSelectFormsProps = {
       selectedRule: selectedRule,
@@ -93,17 +98,18 @@ const Interface: React.FC<IntrefaceProps> = ({stateExercise}) => {
       buttonActiveRule: buttonActiveRule,
       selectedRuleIndex: selectedRuleIndex,
       pb_index: Number(idQuestion),
-      list_index: Number(idLista),
+      list_index: String(idLista),
       setFeedbackTypeAlert: setFeedbackTypeAlert,
       setFeedbackMessageAlert: setFeedbackMessageAlert,
-      setOpenFeedbackAlert: setOpenFeedbackAlert
+      setOpenFeedbackAlert: setOpenFeedbackAlert,
+      problem: String(localStorage.getItem("question")),
     }
     if(openTableSelectForm){
       setOpenTableSelectForm(false)
     }else{
-
       
     openTableSelectFormFunction(props, dispatchMrplato)
+   
   }
   }
 
@@ -127,13 +133,22 @@ const Interface: React.FC<IntrefaceProps> = ({stateExercise}) => {
       buttonActiveRule: buttonActiveRule,
       selection: e,
       input_formula: "",
-      list_index: Number(idLista),
-      pb_index: Number(idQuestion)
+      list_index: String(idLista),
+      pb_index: Number(idQuestion),
+      activity_id: String(localStorage.getItem("LISTID")),
+      classroom_id: stateUser && stateUser.classrom_id,
+      problem: String(localStorage.getItem("question")),
+      user_id: stateUser && stateUser.user_id,
+      setIsCelebrating: setIsCelebrating,
+      user_status: stateUser && stateUser.is_admin,
+
     }
 
     
     prove(props)
     setOpenTableSelectForm(false)
+    handleRestartInputGlobal()
+
     // handleRestart()
     
 
@@ -159,11 +174,20 @@ const Interface: React.FC<IntrefaceProps> = ({stateExercise}) => {
       selection: 0,
       input_formula: "",
       pb_index: Number(idQuestion),
-      list_index: Number(idLista),
-    }
-    prove(props)
-  }
+      list_index: String(idLista),
+      activity_id: String(localStorage.getItem("LISTID")),
+      classroom_id:stateUser && stateUser.classrom_id,
+      problem:String(localStorage.getItem("question")),
+      user_id:stateUser && stateUser.user_id,
+      setIsCelebrating: setIsCelebrating,
+      user_status: stateUser && stateUser.is_admin
 
+    }
+
+    prove(props)
+    setInputTextInputForm([])
+    handleRestartInputGlobal()
+  }
 
   const handleAddhypothesisOnlyAdd = ()=>{
     const props: ProveProps = {
@@ -183,11 +207,23 @@ const Interface: React.FC<IntrefaceProps> = ({stateExercise}) => {
       selection: 0,
       input_formula: inputTextInputForm,
       pb_index: Number(idQuestion),
-      list_index: Number(idLista),
+      list_index: String(idLista),
+      activity_id: String(localStorage.getItem("LISTID")),
+      classroom_id:stateUser && stateUser.classrom_id,
+      problem:String(localStorage.getItem("question")),
+      user_id: stateUser && stateUser.user_id,
+      setIsCelebrating: setIsCelebrating,
+      user_status: stateUser && stateUser.is_admin,
+
     }
+
+
     prove(props)
     setOpenInputForm(false)
+    setInputTextInputForm([])
+    handleRestartInputGlobal()
   }
+
 
 
 const handleaddHypothesisRuleFunction = ()=>{
@@ -205,8 +241,8 @@ const handleaddHypothesisRuleFunction = ()=>{
     selectedRuleIndex: selectedRuleIndex
   }
   
-  addHypothesisRuleFunction(props, dispatchMrplato)
-  setOpenInputForm(false)
+  // addHypothesisRuleFunction(props, dispatchMrplato)
+  // setOpenInputForm(false)
 }
 
 
@@ -219,7 +255,7 @@ const handleaddHypothesisRuleFunction = ()=>{
       setOpenFeedbackAlert:setOpenFeedbackAlert,
       stateMrplato: stateMrplato,
     }
-    removeHypothesisFunction(props,dispatchMrplato)
+    // removeHypothesisFunction(props,dispatchMrplato)
 
   }
 
@@ -231,55 +267,64 @@ const handleaddHypothesisRuleFunction = ()=>{
       setOpenFeedbackAlert:setOpenFeedbackAlert,
       stateMrplato:stateMrplato
     }
-    reduceAbsurdeFunction(props, dispatchMrplato)
+    // reduceAbsurdeFunction(props, dispatchMrplato)
 
   }
+
+  function handleRestartInputGlobal(){
+    setSelectedRows([])
+    setSelectedRule(null)
+  }
+
+
+
 
   const handleRestart = () => {
     setOpenTableSelectForm(false)
     setInputTextInputForm([])
+
+    
     restart(setSelectedRows, setSelectedRule)
   }
 
+  const problem = stateExercise.activity_list && stateExercise.activity_list.find((element: any) => element.id === idLista)
+  
   
 
   React.useEffect(()=>{
-    if(!isNaN(Number(idQuestion)) && !isNaN(Number(idLista))){
-    const props: CreateSessionExercise = {
-      list_index: Number(idLista),
-      pb_index: Number(idQuestion),
-    }
+    
+    if(!isNaN(Number(idQuestion))){
+    if (localStorage.getItem("question") !== null){
 
-    if((Number(idQuestion) !== Number(window.localStorage.getItem("idQuestion"))) ||  (Number(idLista) !== Number(window.localStorage.getItem("idLista")))){
-      
+      const props: any = {
+        problem: problem ? problem.problem[Number(idQuestion)] : localStorage.getItem("question") 
+      }
+      if (problem){
+        localStorage.setItem("question",problem.problem[Number(idQuestion)])
+      }
+    
+    if((Number(idQuestion) !== Number(window.localStorage.getItem("idQuestion"))) ||  (idLista !== window.localStorage.getItem("idLista"))){
       restart_session()
       dispatchMrplato({type:RESET_LIST_NEW_LINES})
     }
     
     CreateSessionExerciseHandle(props, dispatchMrplato)
-  }
+  }}
   window.localStorage.setItem('idQuestion', String(idQuestion))
   window.localStorage.setItem('idLista', String(idLista))
-  
+  setIsCelebrating(false)
+  },[idQuestion])
 
-  },[])
-
-
-
-
-
-
-  if(isNaN(Number(idLista)) || isNaN(Number(idQuestion)) || stateExercise.question[Number(idLista)] === undefined || stateExercise.question[Number(idLista)].data[Number(idQuestion)] === undefined) {
-        
-    return <NotFound/>
-    
-}  
 
     
   return (
     <div className={styles.containerMaster}>
       <div className={styles.container}>
+        {isCelebrating && 
+      <Confetti />
 
+        }
+        
         <Alert messageAlert={messageAlert} openAlert={openAlert} setOpenAlert={setOpenAlert}/>
         <FeedBack setOpenFeedbackAlert={setOpenFeedbackAlert} openFeedbackAlert={openFeedbackAlert} feedbackType={feedbackTypeAlert} message={feedbackMessageAlert}/>
 

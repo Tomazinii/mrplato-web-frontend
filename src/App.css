@@ -23,6 +23,18 @@ body {
 }
 
 :root {
+  --primary-color-button-light:  #333;
+  --primary-color-button-medium: #3498db;
+  --primary-color-button-high: #3498db;
+
+  
+
+
+
+
+
+
+
   --primary-color-button-light:  #4D4C7D;
   --primary-color-button-medium: #3498db;
   --primary-color-button-high: #3498db;
@@ -30,12 +42,9 @@ body {
   
   --second-color-button-light: #4D4C7D;
   --second-color-button-support: #f0f0f0;
-  --second-color-button-active: rgb(127, 126, 189);
+  --second-color-button-active: rgb(102, 101, 172);
   --second-color-button-medium: #4D4C7D;
   --second-color-button-high: #363062;
-
-
-
 
 
 

@@ -89,3 +89,38 @@ export const login = async (props: inputLoginProps) => {
       }
   };
   
+
+  export interface InputChangePassword{
+    password: string
+  }
+
+
+  export const change_password = async (props: InputChangePassword) => {
+    const {password} = props;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+
+      },
+      withCredentials: true
+
+    };
+
+        
+    const body = JSON.stringify({
+      password: password
+    });
+    
+
+    try {
+      const res = (await axios.post(URL + PATH_DEFAULT + "/change-password", body, config));
+      const data = res.data
+      return {data:data, success: true};
+
+    } catch (err: any) {
+      const errMsg = err.response.data.detail
+      return {data:errMsg, success: false};
+    }
+
+  }

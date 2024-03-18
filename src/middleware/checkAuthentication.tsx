@@ -17,24 +17,37 @@ export const CheckAuthentication = ({ children }: any) => {
     const fetchData = async () => {
       
       const result = await checkAuthenticatedFunction(dispatchUser);
-      
-      if (result.body.data.is_authenticated === false) {
+
+      if ( result.body.data === null|| result.body.data.is_authenticated === false) {
         navigate('/login');
       }
 
-      const props: inputgetActivityFunctionsProps = {
-          classroom_id: result && result.body.data.data.classroom_id,
+      
+      if(result.body && result.body.data.data && result.body.data.data.is_admin === "True"){
+
+        const props: inputgetActivityFunctionsProps = {
+          classroom_id: String(localStorage.getItem('classroom_id')),
           dispatch: dispatchClassroom,
       }
-    
       getActivityFunctions(props)
+
+      }else if(result.body && result.body.data.data){
+        const props: inputgetActivityFunctionsProps = {
+          classroom_id: result.body.data.data && result.body.data.data.classroom_id,
+          dispatch: dispatchClassroom,
+      }
+
+
+      getActivityFunctions(props)
+
+      }
       
 
     };
-  
+    
     fetchData();
   
-  }, []);
+  }, [dispatchUser]);
 
 
   return <div>{children}</div>;

@@ -2,8 +2,13 @@
 .container{
     display: flex;
     height: 100vh;
-    margin-top: 70px;
+    margin-top: 50px;
     gap: 20px;
     flex-wrap: wrap;
 }
 
+
+.box{
+    display: flex;
+    flex-wrap: wrap;
+}

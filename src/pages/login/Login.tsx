@@ -4,7 +4,7 @@ import Loginlogo from '../../asset/Login.svg'
 
 import styles from './Login.module.css'
 import { ContextUser } from "../../context/ContenxtUser";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { loginFunction } from "../../utils/user/userFuction";
 
 const Login = ()=>{
@@ -14,7 +14,7 @@ const Login = ()=>{
 
     const { stateUser, dispatchUser } = useContext(ContextUser) || {} ;
 
-    
+    const navigate = useNavigate()
 
     const handleEmailChange = (event: any) => {
         const { value } = event.target;
@@ -37,7 +37,7 @@ const Login = ()=>{
     };
 
 
-    function onSubmit(e: any) {
+    async function onSubmit(e: any) {
         e.preventDefault();
 
         if (emailError.length > 0){
@@ -48,15 +48,20 @@ const Login = ()=>{
                 password: password,
                 dispatch: dispatchUser
             }
-            loginFunction(input)
+            const result: any = await loginFunction(input)
+            if (result.data.body && result.data.body.data && result.data.body.data.is_admin === true) {
+                navigate("/mrplato-admin/classrooms");
+              }
+        
         }
+        setPassword("")
       }
 
+  
+        
       if (stateUser.is_authenticated === true) {
         return <Navigate to="/home  " />;
       }
-
-
 
     return (
         <form onSubmit={(e) => onSubmit(e)}>

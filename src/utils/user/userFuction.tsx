@@ -10,7 +10,7 @@ export interface inputLoginFunctionProps
     dispatch: Dispatch<any>
  }
 
-export const loginFunction = (props: inputLoginFunctionProps): void => {
+export const loginFunction = async (props: inputLoginFunctionProps) => {
     const { 
         email,
         password,
@@ -22,14 +22,18 @@ export const loginFunction = (props: inputLoginFunctionProps): void => {
         password: password
     }
       try{
-            login(input).then((result) =>{
-                if(result.success === true){
-                    dispatch({ type: LOGIN_SUCCESS, payload: result.data });
-                }else{
-                    dispatch({ type: LOGIN_USER_FAIL, payload: result.data})
-                }
-            
-        })
+        const result = await login(input);
+
+        if (result.success === true) {
+            dispatch({ type: LOGIN_SUCCESS, payload: result.data });
+        } else {
+            dispatch({ type: LOGIN_USER_FAIL, payload: result.data });
+        }
+
+        // Retornar o resultado da função login
+        
+        return result;
+
         }catch(err){
         
         }

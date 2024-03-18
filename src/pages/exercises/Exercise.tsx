@@ -11,10 +11,9 @@ export default function Exercise({stateExercise}:any) {
         window.scrollTo(0, 0);
       }, []);
 
-      console.log(stateExercise.activity_list);
+      const typeActivity = "exercises"
+      const exercises_list = stateExercise.activity_list && stateExercise.activity_list.filter((obj: any )=> obj.category === typeActivity)
       
-
-
     return (
         <div className={styles.container}>
             
@@ -23,7 +22,8 @@ export default function Exercise({stateExercise}:any) {
                 <div className={styles.boxlistMaster}>
                     
                 {
-                    stateExercise.activity_list && stateExercise.activity_list.map((content: any, index: number) => (
+                    exercises_list && exercises_list.map((content: any, index: number) => (
+                        
                     <Link
                         onClick={() => {
                         localStorage.setItem("LISTID", stateExercise.activity_list && content.id);
@@ -31,10 +31,9 @@ export default function Exercise({stateExercise}:any) {
                         to={stateExercise.activity_list && content.availability ? `${stateExercise.activity_list && content.id}` : ""}
                         key={index}
                         className={`${styles.boxlist} ${
-                        content.availability ? "" : ""
+                        content.availability ? "":  `${styles.block}`
                         }`}
                     >
-                        
                         <CreateIcon/>
                         <p>{stateExercise.activity_list && content.problem_name}</p>
                         <p>expires in {stateExercise.activity_list && new Date(content.time).toLocaleString('pt-BR')}</p>

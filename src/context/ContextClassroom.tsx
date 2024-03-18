@@ -1,5 +1,5 @@
 import React, { ReactNode, createContext, useReducer } from "react";
-import { GET_ACTIVITY_FAIL, GET_ACTIVITY_SUCCESS, GET_CLASSROOM_FAIL, GET_CLASSROOM_SUCCESS, REGISTER_CLASSROOM_FAIL, REGISTER_CLASSROOM_SUCCESS } from "../api/types";
+import { GET_ACTIVITY_FAIL, GET_ACTIVITY_SUCCESS, GET_ALL_PROBLEM_FAIL, GET_ALL_PROBLEM_SUCCESS, GET_CLASSROOM_FAIL, GET_CLASSROOM_SUCCESS, REGISTER_CLASSROOM_FAIL, REGISTER_CLASSROOM_SUCCESS } from "../api/types";
 
 
 
@@ -10,6 +10,7 @@ export interface StateClassroom {
     teacher_email: string;
     teacher_name: string;
     activity_list: Array<any>;
+    problems: Array<any>;
 }
   
 interface ActionClassroom{
@@ -32,6 +33,7 @@ const initalState: StateClassroom = {
     teacher_name: "",
     classrooms_list: [],
     activity_list: [],
+    problems: [],
 };
 
 function reducer(stateClassroom: StateClassroom, actionClassroom: ActionClassroom) {
@@ -52,6 +54,12 @@ function reducer(stateClassroom: StateClassroom, actionClassroom: ActionClassroo
           const activity_list = actionClassroom.payload.body.data
           
           return {...stateClassroom, activity_list: activity_list}
+
+        case GET_ALL_PROBLEM_SUCCESS:
+          return {...stateClassroom, problems: actionClassroom.payload.body.data}
+
+        case GET_ALL_PROBLEM_FAIL:
+          return {...stateClassroom}
 
         case GET_ACTIVITY_FAIL:
             return {...stateClassroom}

@@ -5,7 +5,7 @@ import { Dispatch } from "react";
 
 const URL = process.env.REACT_APP_URL;
 
-const PATH_DEFAULT = "/api/v1/mrplato/operations"
+const PATH_DEFAULT = "/api/v1/mrplato"
 
 export interface Rows {
   rows: {content: string, type: string, methods_used_info: string}[]
@@ -19,9 +19,13 @@ export interface applyRuleInputProps{
   input_formula: string
   total_or_partial: string
   selection: number
-  list_index: number
+  list_index: string
+  activity_id: string,
+  classroom_id: string,
+  problem:string,
+  user_id:string,
+  user_status: boolean
 }
-
 export interface applyRuleOutputProps{
   type_output: string
   message: string
@@ -31,7 +35,7 @@ export interface applyRuleOutputProps{
 
 export const apply_rule_router = async (props: applyRuleInputProps, dispatch: Dispatch<any> ) => {
   
-  const {index_selected_rows, pb_index, type_selected, sel_rule, input_formula, total_or_partial,selection,list_index} = props;
+  const {index_selected_rows, pb_index,user_status, type_selected, sel_rule, input_formula, total_or_partial,selection,list_index, activity_id, classroom_id,problem,user_id} = props;
     
     const config = {
       headers: {
@@ -42,6 +46,8 @@ export const apply_rule_router = async (props: applyRuleInputProps, dispatch: Di
       withCredentials: true
 
     };
+
+    
     
     const body = JSON.stringify({ 
         selected_proof_line_indexes: index_selected_rows,
@@ -52,20 +58,26 @@ export const apply_rule_router = async (props: applyRuleInputProps, dispatch: Di
         total_or_partial: total_or_partial,
         selection: selection,
         list_index: list_index,
+        activity_id: activity_id,
+        classroom_id: classroom_id,
+        problem: problem,
+        user_id: user_id,
+        user_status: user_status,
     });
     
 
 
     try {
 
-      const res = (await axios.post(URL + PATH_DEFAULT + "/apply_rule_router/", body, config));
+      const res = (await axios.post(URL + PATH_DEFAULT + "/prover", body, config));
       
       const data: applyRuleOutputProps = res.data
 
-      return data
-      
+      return {data:data, success: true};
+    } catch (err: any) {
 
-    } catch (err) {
+      const errMsg = err.response.data.detail
+      return {data:errMsg, success: false};
     }
 };
 
@@ -79,7 +91,8 @@ export interface getOptionProps {
   input_formula: string,
   total_or_partial: string,
   selection: any,
-  list_index: number,
+  list_index: string,
+  problem: string
   
 }
 
@@ -91,7 +104,7 @@ export interface CreateSessionExercise {
 
 export const get_options_selected_form = async (props: getOptionProps) => {
 
-  const {selected_proof_line_indexes, pb_index,type_selected, sel_rule, list_index, total_or_partial} = props;
+  const {selected_proof_line_indexes, pb_index,type_selected, sel_rule, list_index, total_or_partial, problem} = props;
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -107,13 +120,16 @@ export const get_options_selected_form = async (props: getOptionProps) => {
       type_selected: type_selected,
       sel_rule: sel_rule,
       total_or_partial: total_or_partial,
+      problem: problem
     });
     
     try {
-      const res = (await axios.post(URL + PATH_DEFAULT + "/get_options_selected_form/", body, config));
+      const res = (await axios.post(URL + PATH_DEFAULT + "/get_options", body, config));
       const data = res.data
-      return data
-    } catch (err) {
+      return {data:data, success: true};
+    } catch (err: any) {
+      const errMsg = err.response.data.detail
+      return {data:errMsg, success: false};
     }
 };
 
@@ -154,9 +170,9 @@ export const selected_form = async (props: SelectFormProps) => {
     }
 };
 
-export const create_session_exercise = async (props: CreateSessionExercise) => {
-  const {list_index, pb_index} = props;
-
+export const create_session_exercise = async (props: any) => {
+  const {problem} = props;
+  
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -168,12 +184,11 @@ export const create_session_exercise = async (props: CreateSessionExercise) => {
   };
     
     const body = JSON.stringify({ 
-        pb_index: pb_index,
-        list_index: list_index
+        problem: problem,
     });
     
     try {
-      const res = (await axios.post(URL + PATH_DEFAULT + "/create_session_exercise/", body, config));
+      const res = (await axios.post(URL + PATH_DEFAULT + "/check_status_mrplato", body, config));
       
       const data = res.data
       return data
@@ -269,6 +284,10 @@ export const rem_hypothesis = async (props: RemoveHypothesisProps) => {
     } catch (err) {
     }
 };
+
+
+
+
 
 
 export const reduce_absurde = async (props: RemoveHypothesisProps) => {

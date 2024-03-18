@@ -35,7 +35,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import logo from '../../asset/logo.svg';
 import { Link } from 'react-router-dom';
 import { ContextUser } from '../../context/ContenxtUser';
-import { SchoolRounded } from '@mui/icons-material';
+import { AddCommentOutlined, Dashboard, SchoolRounded } from '@mui/icons-material';
 
 const drawerWidth = 240;
 
@@ -154,9 +154,9 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
           </Link>
           <Box sx={{ display: { xs: 'none', md: 'flex' }, }}>
             {stateUser && stateUser.is_admin && 
-          <Link to={"/mrplato-admin/classrooms"}>
-            <IconButton  size="large" aria-label="show 4 new mails">
-                <p style={{fontSize:"1.2rem", marginLeft:"5px"}}>ADMIN</p>
+          <Link to={`/mrplato-admin/classrooms/${localStorage.getItem("classroom_id")}`}>
+            <IconButton >
+              <p>Admin</p>
             </IconButton>
             </Link>
            }
@@ -310,7 +310,7 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
                 <ListItemText primary={"Tournament"} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-            <Link to={"/exercise"}>
+            <Link to={"/exercises"}>
             <ListItem disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
