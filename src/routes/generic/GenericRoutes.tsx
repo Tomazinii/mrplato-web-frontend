@@ -5,13 +5,24 @@ import { MiniDrawer } from "../../component/sidebar/MiniDrawer";
 import { CheckAuthentication } from "../../middleware/checkAuthentication";
 import { ClassroomProvider } from "../../context/ContextClassroom";
 import { AdminRoutes } from "./AdminRoutes";
+import AppBarMobile from "../../component/appbar/AppBarMobile";
 
 export default function GenericRoutes() {
     const [mobilemode, setMobilemode] = React.useState<boolean>()
 
     React.useEffect(() => {
+      
+      if (window.innerWidth < 800) {
+        setMobilemode(true)
+        
+      } else {
+        setMobilemode(false)
+      }
+    
+      
       function handleResize() {
         // Verifica as condições de altura e largura aqui
+        
         if (window.innerWidth < 800) {
           setMobilemode(true)
           
@@ -35,7 +46,9 @@ export default function GenericRoutes() {
     <ClassroomProvider>
       <CheckAuthentication>
           {mobilemode ? 
+          <AppBarMobile>
           <ContainerRoutes />
+          </AppBarMobile>
           :
           <MiniDrawer>
             <ContainerRoutes />

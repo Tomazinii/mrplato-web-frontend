@@ -176,6 +176,7 @@ export const get_activity_by_classroom = async (props: GetActivityProps) => {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
+        withCredentials: true
       };
 
       
@@ -185,8 +186,8 @@ export const get_activity_by_classroom = async (props: GetActivityProps) => {
         const data = res.data
         return {data:data, success: true};
       } catch (err: any) {
-        const errMsg = err.response.data.detail
-        return {data:errMsg, success: false};
+            const errMsg = err.response && err.response.data.detail
+            return {data:errMsg, success: false};
       }
   };
   
@@ -366,6 +367,7 @@ export const create_invitation = async (props: InputCreateInvitationProps) => {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      withCredentials: true
     };
     
     const body = JSON.stringify({ 
@@ -386,3 +388,69 @@ export const create_invitation = async (props: InputCreateInvitationProps) => {
       return {data:errMsg, success: false};
     }
 };
+
+
+
+export interface InputCreateReport{
+  classroom_id: string
+}
+
+
+export const create_report = async (props: InputCreateReport) => {
+  const {classroom_id} = props;
+
+  const config: any = {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    withCredentials: true,
+    responseType: 'blob' // Indica que a resposta é um arquivo binário
+  };
+    
+
+    try {
+
+     
+      const res = (await axios.get(URL + PATH_DEFAULT +`/create_report/${classroom_id}`,  config));
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'report.csv'); // Define o nome do arquivo
+      document.body.appendChild(link);
+      link.click();
+
+    } catch (err: any) {
+      const errMsg = err.response.data.detail
+      return {data:errMsg, success: false};
+    }
+};
+
+
+
+export interface InputGetAllStudents {
+  classroom_id: string;
+}
+
+export const get_all_students = async (props: InputGetAllStudents) => {
+  const {classroom_id} = props
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    withCredentials: true,
+
+  };
+
+  
+  try {
+    const res = (await axios.get(URL + PATH_DEFAULT + `/get_all_students/${classroom_id}`, config));
+    const data = res.data
+    return {data:data, success: true};
+  } catch (err: any) {
+    const errMsg = err.response.data.detail
+    return {data:errMsg, success: false};
+  }
+};
+

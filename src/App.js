@@ -10,11 +10,11 @@ import Expired from './pages/user/Expired'
 import {GlobalProvider} from './context/ContextGlobal'
 import LandingPage from './pages/landingpage/LandingPage'
 import { AdminRoutes } from './routes/generic/AdminRoutes';
+import ForgotPassword from './pages/login/ForgotPassword';
+import SetPassword from './pages/login/SetPassword';
 
 function App() {
-  document.oncopy = function() {
-    return false;
-  };
+
   
   return (
     <div className="App">
@@ -25,6 +25,8 @@ function App() {
       <BrowserRouter>
             <Routes>
               <Route path='/login' element={<Login/>}/>
+              <Route path='/forgot-password' element={<ForgotPassword />}/>
+              <Route path='/set-password/:linkId/:userEmail' element={<SetPassword />}/>
               <Route path='/' element={<LandingPage/>}/>
               <Route path="/invite/:idInvite/:idClassroom" element={<RegisterStudent />} />
               <Route path='/mrplato-admin/*' element={<AdminRoutes/>}/>

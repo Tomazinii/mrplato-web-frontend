@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { TextField, Button, Grid, Typography, Container } from '@mui/material';
 // @ts-ignore
-import Loginlogo from '../../asset/Login.svg'
+import Loginlogo from '../../asset/logo.png'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { check_invite } from '../../api/Invite.api';
 import NotFound from '../NotFound/NotFound';

@@ -1,14 +1,24 @@
 import React from 'react';
 import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import DrawerClassroom from '../../component/admin/DrawerClassroom';
+import { InputGetAllStudentFunction, getAllStudentsFunction } from '../../utils/classroom/getAllStudentsFunction';
+import { ContextUser } from '../../context/ContenxtUser';
+import { ContextClassroom } from '../../context/ContextClassroom';
 
 const Students = () => {
   // Mock data for students
-  const students = [
-    { name: 'João', email: 'joao@example.com', enrollment: '2021001' },
-    { name: 'Maria', email: 'maria@example.com', enrollment: '2021002' },
-    { name: 'Pedro', email: 'pedro@example.com', enrollment: '2021003' },
-  ];
+  const {stateClassroom, dispatchClassroom} = React.useContext(ContextClassroom) || {};
+  
+  React.useEffect(()=>{
+
+    const input: InputGetAllStudentFunction = {
+      classroom_id: String(localStorage.getItem('classroom_id')),
+      dispatch: dispatchClassroom && dispatchClassroom
+    }
+    getAllStudentsFunction(input)
+
+  },[])
+
 
   return (
     <DrawerClassroom link_active={"students"}>
@@ -26,7 +36,7 @@ const Students = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {students.map((student, index) => (
+              {stateClassroom && stateClassroom.students && stateClassroom.students.map((student: any, index: any) => (
                 <TableRow key={index}>
                   <TableCell>{student.name}</TableCell>
                   <TableCell>{student.email}</TableCell>

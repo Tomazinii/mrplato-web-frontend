@@ -20,6 +20,8 @@ import Activity from "../../pages/admin/Activity";
 import { getActivityFunctions, inputgetActivityFunctionsProps } from "../../utils/classroom/getActivitiesFunctions";
 import { ContextClassroom } from "../../context/ContextClassroom";
 import { MiniDrawer } from "../../component/sidebar/MiniDrawer";
+import Challenge from "../../pages/challenges/Challenges";
+import ListChallenges from "../../pages/challenges/ListChallenges";
 
 
 export function ContainerRoutes() {
@@ -38,11 +40,19 @@ export function ContainerRoutes() {
         <Route path="/home" element={<Home />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/exercises/" element={<Exercise stateExercise={stateClassroom}/>} />
+
         <Route path="/exercises/:idLista/" element={<ListExercise stateExercise={stateClassroom}/>} />
 
         {stateExercise && 
         <Route path="/exercises/:idLista/:idQuestion/" element={<Interface stateExercise={stateClassroom} />} />
       }
+
+        <Route path="/challenges/" element={<Challenge stateExercise={stateClassroom}/>} />
+        <Route path="/challenges/:idLista/" element={<ListChallenges stateExercise={stateClassroom}/>} />
+        {stateExercise && 
+        <Route path="/challenges/:idLista/:idQuestion/" element={<Interface stateExercise={stateClassroom} />} />
+      }
+
         <Route path="content" element={<Content />} />
         <Route path="*" element={<NotFound/>} />
         

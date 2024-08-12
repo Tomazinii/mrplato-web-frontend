@@ -12,6 +12,7 @@ export const get_all_problems = async () => {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
+        withCredentials: true
       };
 
       

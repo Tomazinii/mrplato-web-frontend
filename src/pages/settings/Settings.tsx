@@ -53,10 +53,10 @@ const Settings = () => {
     return (
         <div className={styles.container}>
             <div className={styles.inputbox}>
-                <Avatar alt={stateUser && stateUser.user_email} src="/static/images/avatar/1.jpg" />
-                <TextField id="outlined-disabled" disabled value={usernames} />
-                <TextField disabled id="outlined-disabled" value={stateUser && stateUser.user_email} />
-                <TextField disabled id="outlined-disabled" value={stateUser && stateUser.enrollment} />
+                <Avatar alt={usernames} src="/static/images/avatar/1.jpg" />
+                <TextField label="Username" id="outlined-disabled" disabled value={usernames} />
+                <TextField label="Email" disabled id="outlined-disabled" value={stateUser && stateUser.user_email} />
+                <TextField label="Enrollment" disabled id="outlined-disabled" value={stateUser && stateUser.enrollment} />
                 <Divider />
                 <h3>Change password</h3>
                 <TextField
@@ -81,7 +81,7 @@ const Settings = () => {
                 {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
                 <Divider />
                 <h3>Exit</h3>
-                <Button onClick={handleLogout} style={{ backgroundColor: "#6e0606" }} variant="contained">Logout</Button>
+                <Button onClick={handleLogout} style={{ backgroundColor: "#6e0606", marginBottom:"20px" }} variant="contained">Logout</Button>
             </div>
         </div>
     );

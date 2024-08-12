@@ -4,15 +4,16 @@ import Layer1 from './Layer1';
 import Layer2 from './Layer2';
 import Layer3 from './Layer3';
 import Alert from './Alert';
-import { CreateSessionExerciseHandle, openSelectFormsProps, openTableSelectFormFunction, prove, ProveProps, reduceAbsurdeFunction, removeHypothesisFunction, restart, selectFormFunction, selectFormsProps} from '../../utils/Interface/InterfaceFuntions';
+import { BackStateMrplato, CreateSessionExerciseHandle, openSelectFormsProps, openTableSelectFormFunction, prove, ProveProps, reduceAbsurdeFunction, removeHypothesisFunction, restart, selectFormFunction, selectFormsProps} from '../../utils/Interface/InterfaceFuntions';
 import FeedBack from './FeedBack';
 import { ContextMrplato } from '../../context/ContextMrplato';
 import { RESET_LIST_NEW_LINES } from '../../api/types';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { restart_session } from '../../api/Session.api';
 import Confetti from 'react-confetti';
 import { ContextUser } from '../../context/ContenxtUser';
 import { ContextClassroom } from '../../context/ContextClassroom';
+import { ArrowBack } from '@mui/icons-material';
 
 
 interface IntrefaceProps {
@@ -28,7 +29,7 @@ const Interface: React.FC<IntrefaceProps> = ({stateExercise}) => {
   const {idQuestion, idLista} = useParams()
   
 
-  
+  const navigate = useNavigate()
   const [buttonActiveRule, setButonActiveRule] = React.useState("1")
   const [selectedRule, setSelectedRule] = React.useState<any>()
   const [selectedRuleIndex, setSelectedRuleIndex] = React.useState<any>()
@@ -45,7 +46,7 @@ const Interface: React.FC<IntrefaceProps> = ({stateExercise}) => {
   const [optionSelectedForm, setOptionSelectedForm] = React.useState<any>()
   const [isCelebrating, setIsCelebrating] = useState(true);
   
-
+  
   const context = useContext(ContextMrplato);
   const { stateMrplato, dispatchMrplato } = context || {};
   
@@ -86,6 +87,12 @@ const Interface: React.FC<IntrefaceProps> = ({stateExercise}) => {
       setInputTextInputForm(inputTextInputForm.slice(0,-1))
     
   
+  }
+
+
+  const handleBack = () =>{
+    
+    BackStateMrplato(dispatchMrplato)
   }
   
   const handleOpenTableSelect = ()=>{
@@ -288,11 +295,22 @@ const handleaddHypothesisRuleFunction = ()=>{
   }
 
   const problem = stateExercise.activity_list && stateExercise.activity_list.find((element: any) => element.id === idLista)
+  const list_length = problem && problem.problem && Number(problem.problem.length)
   
   
-
   React.useEffect(()=>{
     
+    
+    if(Number(idQuestion) >= list_length){
+      if ( problem && problem.category === "exercises"){
+      navigate("/exercises")
+    }else if (problem && problem.category === "challenges"){
+      navigate("/challenges")
+    }
+      return
+    }
+    
+
     if(!isNaN(Number(idQuestion))){
     if (localStorage.getItem("question") !== null){
 
@@ -316,10 +334,16 @@ const handleaddHypothesisRuleFunction = ()=>{
   },[idQuestion])
 
 
-    
+  
   return (
     <div className={styles.containerMaster}>
       <div className={styles.container}>
+        {problem && problem.category === "exercises" &&
+        <Link className={styles.buttonBack} to={`/exercises/${idLista}`}><ArrowBack className={styles.ArrowBack}/></Link>
+      }
+              {problem && problem.category === "challenges" &&
+        <Link className={styles.buttonBack} to={`/challenges/${idLista}`}><ArrowBack className={styles.ArrowBack}/></Link>
+      }
         {isCelebrating && 
       <Confetti />
 
@@ -327,7 +351,6 @@ const handleaddHypothesisRuleFunction = ()=>{
         
         <Alert messageAlert={messageAlert} openAlert={openAlert} setOpenAlert={setOpenAlert}/>
         <FeedBack setOpenFeedbackAlert={setOpenFeedbackAlert} openFeedbackAlert={openFeedbackAlert} feedbackType={feedbackTypeAlert} message={feedbackMessageAlert}/>
-
         <div className={`${styles.layer} ${styles.layer1}`}>
           <div className={styles.layerContainer}>
           <Layer1 buttonActive={buttonActiveRule} onClick={setButonActiveRule}/>
@@ -344,7 +367,7 @@ const handleaddHypothesisRuleFunction = ()=>{
         
         <div className={`${styles.layer} ${styles.layer3}`}> 
           <div className={styles.layerContainer}>
-            <Layer3 questionProposition={questionProposition} selectedRule={selectedRule} setOpenInputForm={setOpenInputForm} inputTextInputForm={inputTextInputForm}  openInputForm={openInputForm} openTableSelectForm={openTableSelectForm} buttonActiveRule={buttonActiveRule} handleFunction={{handleProve, handleRestart, handleOpenTableSelect, handleInputTextInputForm, handleInputTextInputFormClear,handleAddhypothesis, handleSelectFormFunction,handleAddhypothesisOnlyAdd,handleaddHypothesisRuleFunction,handleRemoveHypothesisFunction, handleReduceAbsurdeFunction}}  selectedRows={selectedRows} selectRow={selectRow}  />
+            <Layer3 questionProposition={questionProposition} selectedRule={selectedRule}  setOpenInputForm={setOpenInputForm} inputTextInputForm={inputTextInputForm}  openInputForm={openInputForm} openTableSelectForm={openTableSelectForm} buttonActiveRule={buttonActiveRule} handleFunction={{handleProve, handleRestart, handleBack,handleOpenTableSelect, handleInputTextInputForm, handleInputTextInputFormClear,handleAddhypothesis, handleSelectFormFunction,handleAddhypothesisOnlyAdd,handleaddHypothesisRuleFunction,handleRemoveHypothesisFunction, handleReduceAbsurdeFunction}}  selectedRows={selectedRows} selectRow={selectRow}  />
           </div>
         </div>
 

@@ -4,10 +4,17 @@
     
 .containerLayer1{
     display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    white-space: nowrap;
     margin-top: 10px;
     flex-direction: row;
+    padding: 10px;
     justify-content: space-between;
     
+}
+.containerLayer1::-webkit-scrollbar {
+    display: none; /* esconde a barra de rolagem no Chrome/Safari */
 }
 }
 
@@ -15,6 +22,7 @@
 @media (min-width: 800px) {
     .containerMaster{
         display: flex;
+        
         justify-content: center;
     }
     .containerLayer1{

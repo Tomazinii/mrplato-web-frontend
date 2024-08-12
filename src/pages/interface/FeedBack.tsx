@@ -38,7 +38,7 @@ const FeedBack: React.FC<feedBackProps> = ({feedbackType, message, openFeedbackA
         {feedbackType === "Info" &&
         <Snackbar style={{ top: '80px' , width:"80%"}}  anchorOrigin={{ vertical, horizontal }}  open={openFeedbackAlert} autoHideDuration={time} onClose={()=>{setOpenFeedbackAlert(false)}}>
             <Alert style={{width:"100%"}} onClose={()=>{setOpenFeedbackAlert(false)}} variant='filled' severity="info">
-                <AlertTitle>Created</AlertTitle>
+                <AlertTitle>RULE APPLIED</AlertTitle>
                 {message}
                 
             </Alert>

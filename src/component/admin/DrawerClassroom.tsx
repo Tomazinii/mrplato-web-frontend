@@ -94,7 +94,7 @@ export default function DrawerClassroom({children, link_active}: any) {
                 <ListItemIcon>
                   <ModeIcon /> 
                 </ListItemIcon>
-                <ListItemText primary={"Task"} />
+                <ListItemText primary={"Tasks"} />
               </ListItemButton>
             </ListItem>
             </Link>
@@ -136,7 +136,7 @@ export default function DrawerClassroom({children, link_active}: any) {
                 <ListItemIcon>
                   <BarChartIcon /> 
                 </ListItemIcon>
-                <ListItemText primary={"Statistic"} />
+                <ListItemText primary={"Reports"} />
               </ListItemButton>
             </ListItem>
             </Link>

@@ -7,8 +7,20 @@ import CreateIcon from '@mui/icons-material/Create';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 export default function Exercise({stateExercise}:any) {
 
+    const [mobilemode, setMobilemode] = React.useState<boolean>()
+
+      
+
+
     React.useEffect(() => {
         window.scrollTo(0, 0);
+
+        if (window.innerWidth < 800) {
+            setMobilemode(true)
+            
+          } else {
+            setMobilemode(false)
+          }
       }, []);
 
       const typeActivity = "exercises"
@@ -18,7 +30,7 @@ export default function Exercise({stateExercise}:any) {
         <div className={styles.container}>
             
         <div className={styles.container}>
-            <h1 className={styles.title}>Exercises</h1>
+            <h1 className={styles.title}>Practicing</h1>
                 <div className={styles.boxlistMaster}>
                     
                 {
@@ -30,13 +42,19 @@ export default function Exercise({stateExercise}:any) {
                         }}
                         to={stateExercise.activity_list && content.availability ? `${stateExercise.activity_list && content.id}` : ""}
                         key={index}
-                        className={`${styles.boxlist} ${
+                        className={`${styles.boxlist}  ${
                         content.availability ? "":  `${styles.block}`
                         }`}
                     >
-                        <CreateIcon/>
-                        <p>{stateExercise.activity_list && content.problem_name}</p>
+                        {!mobilemode &&
+                        <CreateIcon/>}
+                        <p className={styles.exercisetext}>{stateExercise.activity_list && content.problem_name}</p>
+                        {!mobilemode ?
                         <p>expires in {stateExercise.activity_list && new Date(content.time).toLocaleString('pt-BR')}</p>
+                        :
+                        <p>{stateExercise.activity_list && new Date(content.time).toLocaleString('pt-BR')}</p> 
+                      
+                        }
                         {stateExercise.activity_list && content.availability ? (
                         <KeyboardArrowRightIcon/>
                         ) : (

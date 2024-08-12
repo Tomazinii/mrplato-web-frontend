@@ -4,9 +4,11 @@ export const prove_validation = (selectedRule:string , selectedRows: Array<numbe
     if (selectedRows.length === 0 ) {
         return {status: false, message: "You need to select Row"};
     }
-    if (selectedRule.length === 0 || selectedRule === "null") {
+    if (selectedRule === String(undefined) || selectedRule === "null") {
         return {status: false, message: "You need to select Rule"};
     }
+    
+    
     return {status: true, message:""};
 }
 

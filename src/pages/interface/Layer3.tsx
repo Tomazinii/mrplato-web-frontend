@@ -24,6 +24,7 @@ interface Layer3Props {
     list: string[];
     conclusion: string;
   };
+  
   setOpenInputForm: React.Dispatch<React.SetStateAction<boolean>>
   handleFunction: {
     handleProve: ()=>void;
@@ -37,6 +38,7 @@ interface Layer3Props {
     handleaddHypothesisRuleFunction: ()=>void;
     handleRemoveHypothesisFunction: ()=>void;
     handleReduceAbsurdeFunction: ()=>void;
+    handleBack: () => void;
   }
 }
 
@@ -68,6 +70,8 @@ const Layer3: React.FC<Layer3Props> = ({selectedRows, selectRow, handleFunction,
   let listid = localStorage.getItem("LISTID")
   let questionid = Number(localStorage.getItem("idQuestion")) + 1
 
+
+    
   return (
     <div>
       <div className={styles.containerConclusion}>
@@ -102,6 +106,9 @@ const Layer3: React.FC<Layer3Props> = ({selectedRows, selectRow, handleFunction,
             <ButtonProposition handleFuntionSelectRuleIndex={()=>{}} is_selected_form={true} questionPropostionDiv={false} color="#33997F" setListSelect={()=>{}} listSelect={selectedRows} select={""} id={index + 1000} index={`${index}`} method={""} name={element.content} onClick={(e)=>{handleFunction.handleSelectFormFunction(e);
             }} type='default' typeActive={false}  />
             ))}
+            <div style={{backgroundColor:"#FFBB8E",}}>
+            <p style={{color:"#333", fontSize:"1.2rem", marginTop:"20px"}}>Select part of the formula </p>
+            </div>
         </ul>
         }
 
@@ -120,17 +127,18 @@ const Layer3: React.FC<Layer3Props> = ({selectedRows, selectRow, handleFunction,
           }
 
           { 
-            !activeAdd && !activeAdd0 && !activeRemove && !activeReduce &&  buttonActiveRuleStatus &&
-            <ButtonOperation disabled={ validate.status ? false : true}  text='SELECT' onclick={()=>{handleFunction.handleOpenTableSelect()}}/>
+          
+          !openTableSelectForm && !activeAdd && !activeAdd0 && !activeRemove && !activeReduce &&  buttonActiveRuleStatus &&
+            <ButtonOperation disabled={ validate.status ? false : true}  text='PROVE' onclick={()=>{handleFunction.handleOpenTableSelect()}}/>
 
           }
           {buttonActiveRule === "0" && activeAdd0 &&
-            <ButtonOperation disabled={false} text='ADD' onclick={()=>{handleFunction.handleAddhypothesis()}}/>
+            <ButtonOperation disabled={false} text='PROVE' onclick={()=>{handleFunction.handleAddhypothesis()}}/>
 
           }
 
           {buttonActiveRule === "1" && activeAdd &&
-            <ButtonOperation disabled={ validate.status ? false : true} text='ADD' onclick={()=>{handleFunction.handleAddhypothesis()}}/>
+            <ButtonOperation disabled={ validate.status ? false : true} text='PROVE' onclick={()=>{handleFunction.handleAddhypothesis()}}/>
 
           }
           {buttonActiveRule === "0" && activeRemove &&
@@ -145,7 +153,7 @@ const Layer3: React.FC<Layer3Props> = ({selectedRows, selectRow, handleFunction,
               handleFunction.handleRestart()
               restart_session()
               dispatchMrplato({type:RESET_LIST_NEW_LINES})}}/>
-            <ButtonOperation disabled={false}  text='BACK' onclick={()=>{dispatchMrplato({type:REMOVE_LAST_LINE_FROM_LIST})}}/>
+            <ButtonOperation disabled={false}  text='UNDO' onclick={()=>{handleFunction.handleBack()}}/>
             <ButtonOperation disabled={false} text='NEXT' onclick={()=>{
               handleFunction.handleRestart()
               restart_session()

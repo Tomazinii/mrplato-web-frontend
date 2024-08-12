@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { AddHypothesisOnlyAddProps, AddHypothesisRuleProps, CreateSessionExercise, RemoveHypothesisProps, SelectFormProps, add_hypothesis_only_add_api, add_hypothesis_rule, applyRuleInputProps, applyRuleOutputProps, apply_rule_router, create_session_exercise, getOptionProps, get_options_selected_form, reduce_absurde, rem_hypothesis, selected_form } from "../../api/Mrplato.api";
+import { AddHypothesisOnlyAddProps, AddHypothesisRuleProps, CreateSessionExercise, RemoveHypothesisProps, SelectFormProps, add_hypothesis_only_add_api, add_hypothesis_rule, applyRuleInputProps, applyRuleOutputProps, apply_rule_router, back_state_mrplato, create_session_exercise, getOptionProps, get_options_selected_form, reduce_absurde, rem_hypothesis, selected_form } from "../../api/Mrplato.api";
 import { prove_validation, select_form_validation } from "../../validations/interface/InterfaceValidation"
 import { ADD_NEW_LINE_TO_LIST, GET_OPTIONS_SELECTED_FORM, REMOVE_METHOD_AND_CHANGE_NEW_LIST ,ADD_NEW_LINES_TO_LIST, CREATE_SESSION_EXERCISE} from "../../api/types";
 import { mergeLists } from "./merge_rows";
@@ -365,6 +365,24 @@ export const prove = (props: ProveProps): void => {
 
 
   };
+
+
+
+  export const BackStateMrplato = (dispatch:any): void => {
+    
+    back_state_mrplato().then((result)=>{
+      if (result.success && result.data && result.data.body.data.premisses.length > 0){
+      dispatch({ type: CREATE_SESSION_EXERCISE, payload: result.data })
+    }
+    })
+
+
+
+
+  };
+
+
+
 
   export const addHypothesisRuleFunction = (props: any, dispatch:any): void => {
     const { 

@@ -31,7 +31,7 @@ const MenuButtonHome: React.FC<ButtonProps> = ({text, path, color, colorLoadtota
             </p>
             {load &&
             <div style={{backgroundColor: colorLoadtotal, width: "100%"}} className={styles.loadTotal}>
-                <div style={{backgroundColor: color, width: "60%"}} className={styles.load}></div>
+                <div style={{backgroundColor: color, width: "100%"}} className={styles.load}></div>
             </div>
             }
 

@@ -31,8 +31,6 @@ import { ContextClassroom } from '../../context/ContextClassroom';
 import { getAllProblemFunctions } from '../../utils/classroom/getAllProblemFunctions';
 import { delete_activity, inputDeleteActivityProps, inputRegisterActivityByInsertProps, inputRegisterActivityBySelectProps, register_activity_by_insert_problem, register_activity_by_select_problem } from '../../api/Classroom.api';
 import { Link } from 'react-router-dom';
-import { getClassroom } from '../../utils/classroom/getClassroomFunctions';
-import { ContextUser } from '../../context/ContenxtUser';
 import { getActivityFunctions, inputgetActivityFunctionsProps } from '../../utils/classroom/getActivitiesFunctions';
 
 const VisuallyHiddenInput = styled('input')({
@@ -123,6 +121,7 @@ export default function Activity() {
           time: formattedDateTime
         };
         register_activity_by_insert_problem(input).then((result: any) => {
+          
           if (result.success === true) {
             setMessage("Activity registered successfully!!");
             setFormData({
@@ -132,6 +131,9 @@ export default function Activity() {
             });
             setSelectedProblemId("");
             setSelectedDateTime("Select Time");
+          }else {
+            setMessage(result.data);
+
           }
         });
       }
@@ -183,7 +185,7 @@ export default function Activity() {
         <form onSubmit={(e) => handleSubmits(e)}>
           <h2>Register Task</h2>
           <FormControl fullWidth margin="normal">
-            <Button onClick={() => { setProblemForm(!problemForm) }} variant="outlined">{problemForm ? "Insert Problem" : "Select Existing Problem"}</Button>
+            <Button onClick={() => { setProblemForm(!problemForm) }} variant="outlined">{problemForm ? " SELECT LIST OF PROBLEMS FILE" : "SELECT EXISTING LIST OF PROBLEMS"}</Button>
           </FormControl>
           <FormControl fullWidth margin="normal">
             <label>Deadline</label>
@@ -191,7 +193,7 @@ export default function Activity() {
           </FormControl>
           {problemForm ?
             <FormControl fullWidth margin="normal">
-              <InputLabel>Select Problem</InputLabel>
+              <InputLabel>Select List of Problem</InputLabel>
               <Select
                 name="selectProblem"
                 value={formData.selectProblem}
@@ -207,7 +209,7 @@ export default function Activity() {
               <FormControl fullWidth margin="normal">
                 <TextField
                   id="problem"
-                  label="Activity name"
+                  label="Task name"
                   value={problemNameForm}
                   onChange={handleInputChangeProblemName}
                   variant="outlined"

@@ -18,7 +18,8 @@ export const login = async (props: inputLoginProps) => {
           Accept: "application/json",
   
         },
-        withCredentials: true
+        withCredentials: true,
+        credentials: 'include'
   
       };
       
@@ -38,7 +39,105 @@ export const login = async (props: inputLoginProps) => {
         return {data:errMsg, success: false};
       }
   };
+
+
+  export const send_link_password_email = async (email: string) => {
   
+      
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+  
+        },
+        withCredentials: true
+  
+      };
+      
+      const body = JSON.stringify({ 
+        user_email: email,
+      });
+  
+      try {
+        const res = (await axios.post(URL + PATH_DEFAULT + "/link-forgot-password", body, config));
+        const data = res.data
+          
+        return {data:data, success: true};
+      } catch (err: any) {
+        const errMsg = err.response.data.detail
+        return {data:errMsg, success: false};
+      }
+  };
+  
+  
+
+  
+  export const set_new_password = async (props: any) => {
+  
+          
+    const { 
+      password,
+      email,
+      link_id,
+  } = props;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+
+      },
+      withCredentials: true
+
+    };
+    
+    const body = JSON.stringify({ 
+      new_password: password,
+      user_email: email,
+      link_id: link_id
+    });
+
+    try {
+      const res = (await axios.post(URL + PATH_DEFAULT + "/set-password", body, config));
+      const data = res.data
+        
+      return {data:data, success: true};
+    } catch (err: any) {
+      const errMsg = err.response.data.detail
+      return {data:errMsg, success: false};
+    }
+};
+
+
+export const check_link_password = async (params: any) => {
+
+  const {link_id} = params;
+  
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+
+      },
+      withCredentials: true
+    };
+
+    const body = JSON.stringify({ 
+      link_id: String(link_id)
+    });
+    
+    try {
+      const res = (await axios.post(URL + PATH_DEFAULT + "/check-link-reset-password", body, config));
+      const data = res.data
+        
+      return {data:data, success: true};
+    } catch (err: any) {
+
+      const errMsg = err.response.data.detail
+      return {data:errMsg, success: false};
+    }
+};
+
  
 
   export const check_login = async () => {

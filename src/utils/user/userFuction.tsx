@@ -25,6 +25,7 @@ export const loginFunction = async (props: inputLoginFunctionProps) => {
         const result = await login(input);
 
         if (result.success === true) {
+            
             dispatch({ type: LOGIN_SUCCESS, payload: result.data });
         } else {
             dispatch({ type: LOGIN_USER_FAIL, payload: result.data });

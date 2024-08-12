@@ -9,7 +9,7 @@ export const CheckAuthentication = ({ children }: any) => {
   const { dispatchUser } = useContext(ContextUser) || {};
   const { dispatchClassroom } = useContext(ContextClassroom) || {};
 
-  document.title = "Mrplato";
+  document.title = "MrAris";
   const navigate = useNavigate();
 
 
@@ -47,7 +47,7 @@ export const CheckAuthentication = ({ children }: any) => {
     
     fetchData();
   
-  }, [dispatchUser]);
+  }, []);
 
 
   return <div>{children}</div>;

@@ -32,7 +32,7 @@ import EqualizerIcon from '@mui/icons-material/Equalizer';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 // @ts-ignore
-import logo from '../../asset/logo.svg';
+import logo from '../../asset/logo.png';
 import { Link } from 'react-router-dom';
 import { ContextUser } from '../../context/ContenxtUser';
 import { AddCommentOutlined, Dashboard, SchoolRounded } from '@mui/icons-material';
@@ -161,10 +161,12 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
             </Link>
            }
             <IconButton
+            disabled={true}
               size="large"
               aria-label=""
             >
-              <Badge badgeContent={1} color="error">
+
+              <Badge  badgeContent={0} color="error">
                 
                 <NotificationsIcon />
               </Badge>
@@ -199,7 +201,7 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
         <Divider />
         <List>
 
-        <ListItem disablePadding sx={{ display: 'block' }}>
+        <ListItem disabled={true} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -217,11 +219,11 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
                 >
                   <MouseIcon />
                 </ListItemIcon>
-                <ListItemText primary={"Practitioner"} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={"Try Yourself"} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
 
-            <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItem disabled={true} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
              
                 sx={{
@@ -240,13 +242,13 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
                 >
                   <AutoStoriesIcon />
                 </ListItemIcon>
-                <ListItemText primary={"Content"} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={"Fundamentals"} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
         </List>
         <Divider />
         <List>
-        <ListItem disablePadding sx={{ display: 'block' }}>
+        <ListItem disabled={true} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -264,9 +266,10 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
                 >
                   <SportsEsportsIcon />
                 </ListItemIcon>
-                <ListItemText primary={"Games"} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={"Quiz"} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
+            <Link to={"/challenges"}>
             <ListItem disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -288,8 +291,8 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
                 <ListItemText primary={"Challenges"} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-
-            <ListItem disablePadding sx={{ display: 'block' }}>
+            </Link>
+            <ListItem disabled={true} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -329,7 +332,7 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
                 >
                   <ChecklistIcon />
                 </ListItemIcon>
-                <ListItemText primary={"Exercises"} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={"Practicing"} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
             </Link>
@@ -337,7 +340,7 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
         <Divider />
         <List>
 
-<ListItem disablePadding sx={{ display: 'block' }}>
+<ListItem disabled={true} disablePadding sx={{ display: 'block' }}>
       <ListItemButton
         sx={{
           minHeight: 48,
@@ -359,7 +362,7 @@ export const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({ children 
       </ListItemButton>
     </ListItem>
     <Link to="/settings">
-    <ListItem disablePadding sx={{ display: 'block' }}>
+    <ListItem disabled={true} disablePadding sx={{ display: 'block' }}>
       <ListItemButton
         sx={{
           minHeight: 48,

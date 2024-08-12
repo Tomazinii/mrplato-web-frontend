@@ -1,9 +1,31 @@
 import React from 'react';
 import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
 import DrawerClassroom from '../../component/admin/DrawerClassroom';
+import { InputCreateReport, create_report } from '../../api/Classroom.api';
+import { ContextClassroom } from '../../context/ContextClassroom';
+import { InputGetAllStudentFunction, getAllStudentsFunction } from '../../utils/classroom/getAllStudentsFunction';
 
 const Students = () => {
-  // Mock data for students and their activities
+
+
+  // Mock data for students
+  const {stateClassroom, dispatchClassroom} = React.useContext(ContextClassroom) || {};
+  
+  React.useEffect(()=>{
+
+    const input: InputGetAllStudentFunction = {
+      classroom_id: String(localStorage.getItem('classroom_id')),
+      dispatch: dispatchClassroom && dispatchClassroom
+    }
+    getAllStudentsFunction(input)
+
+  },[])
+
+
+
+
+
+
   const students = [
     { name: 'João', email: 'joao@example.com', enrollment: '2021001', activities: [
       { type: 'Exercises', problems: ['Problem 1', 'Problem 2', 'Problem 3'] },
@@ -29,8 +51,10 @@ const Students = () => {
 
   // Function to generate report
   const generateReport = () => {
-    // Implement your report generation logic here
-    alert('Report generated!');
+    const props: InputCreateReport = {
+      classroom_id: String(localStorage.getItem('classroom_id'))
+    }
+    create_report(props)
   };
 
   return (
@@ -40,7 +64,7 @@ const Students = () => {
           <Typography variant="h6">
             Classroom Statistic
           </Typography>
-          <Button style={{marginTop:"20px"}} variant="contained" onClick={generateReport}>download complete report</Button>
+          <Button style={{marginTop:"20px"}} variant="contained" onClick={generateReport}>download complete report .csv</Button>
         </div>
         <TableContainer style={{marginTop:"50px"}} component={Paper}>
           <Table aria-label="students activities table">
@@ -56,15 +80,16 @@ const Students = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {students.map((student, index) => (
+            {stateClassroom && stateClassroom.students && stateClassroom.students.map((student: any, index: any) => (
                 <TableRow key={index}>
                   <TableCell>{student.name}</TableCell>
                   <TableCell>{student.email}</TableCell>
                   <TableCell>{student.enrollment}</TableCell>
                   {/* Render each activity cell */}
-                  <TableCell>{10}</TableCell>
-                  <TableCell>{renderProblems(student.activities.find(activity => activity.type === 'Tournament')?.problems)}</TableCell>
-                  <TableCell>{renderProblems(student.activities.find(activity => activity.type === 'Challenge')?.problems)}</TableCell>
+                  <TableCell>-</TableCell>
+                  <TableCell>-</TableCell>
+                  {/* <TableCell>{renderProblems(student.activities.find(activity => activity.type === 'Tournament')?.problems)}</TableCell> */}
+                  <TableCell>-</TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -136,6 +136,31 @@ export const get_options_selected_form = async (props: getOptionProps) => {
 
 
 
+export const back_state_mrplato = async () => {
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      withCredentials: true
+    };
+  
+    
+    try {
+      const res = (await axios.get(URL + PATH_DEFAULT + "/back_state_mrplato", config));
+      const data = res.data
+      return {data:data, success: true};
+    } catch (err: any) {
+      const errMsg = err.response.data.detail
+      return {data:errMsg, success: false};
+    }
+};
+
+
+
+
+
 
 export interface SelectFormProps {
   rows: {content: string, type: string, methods_used_info: string}[],
@@ -152,6 +177,7 @@ export const selected_form = async (props: SelectFormProps) => {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      withCredentials: true
     };
     
     const body = JSON.stringify({ 
@@ -171,6 +197,7 @@ export const selected_form = async (props: SelectFormProps) => {
 };
 
 export const create_session_exercise = async (props: any) => {
+
   const {problem} = props;
   
   const config = {
@@ -186,13 +213,19 @@ export const create_session_exercise = async (props: any) => {
     const body = JSON.stringify({ 
         problem: problem,
     });
+
+
     
     try {
       const res = (await axios.post(URL + PATH_DEFAULT + "/check_status_mrplato", body, config));
+
       
       const data = res.data
       return data
-    } catch (err) {
+    } catch (err: any) {
+      
+      const errMsg = err.response.data.detail
+      return {data:errMsg, success: false};
     }
 };
 
@@ -298,6 +331,7 @@ export const reduce_absurde = async (props: RemoveHypothesisProps) => {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
+      withCredentials: true
     };
     
     const body = JSON.stringify({ 
@@ -311,9 +345,6 @@ export const reduce_absurde = async (props: RemoveHypothesisProps) => {
     } catch (err) {
     }
 };
-
-
-
 
 
 

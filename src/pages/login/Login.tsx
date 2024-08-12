@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react"
 // @ts-ignore
-import Loginlogo from '../../asset/Login.svg'
+import Loginlogo from '../../asset/logo.png'
 
 import styles from './Login.module.css'
 import { ContextUser } from "../../context/ContenxtUser";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { loginFunction } from "../../utils/user/userFuction";
 
 const Login = ()=>{
@@ -60,7 +60,7 @@ const Login = ()=>{
   
         
       if (stateUser.is_authenticated === true) {
-        return <Navigate to="/home  " />;
+        return <Navigate to="/home" />;
       }
 
     return (
@@ -87,7 +87,7 @@ const Login = ()=>{
                         <button className={styles.button} onClick={()=>{}} style={{display:"flex", alignItems:"center", justifyContent:"center",backgroundColor:"#333",marginLeft:"5px", borderRadius:"50px", height:"60px", fontFamily:"default", fontWeight:"600", color:"#F2F2F2"}}>GO!</button>
                 </div>
                 
-                <p>Forgot password?</p> 
+                <p><Link to="/forgot-password" >Forgot password?</Link></p> 
 
 
             </div>

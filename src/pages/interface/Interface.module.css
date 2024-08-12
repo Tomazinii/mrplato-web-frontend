@@ -1,6 +1,6 @@
 
 
-@media (min-height: 760px) {
+@media (min-height: 100px) {
   @media (max-width: 800px) {
     
   
@@ -34,10 +34,18 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     overflow-y: auto;
     background-color: #f1f1f1f1;
+    height: 100vh;
   }
   
   .layer3 {
     background-color: #f1f1f1f1;
+  }
+  .buttonBack{
+    background-color:#4D4C7D;
+    padding: 5px;
+  }
+  .ArrowBack{
+    color: #fff;
   }
 }
 
@@ -66,7 +74,7 @@
     
     .container {
       position: relative;
-      font-family: "default";
+      font-family: 'alecrin';
       width: 100%;
       padding: 10px;
       height: 100%;
@@ -111,6 +119,11 @@
 
     
   }
+  .ArrowBack{
+    color: #333;
+  }
+
+
 
   }
 }

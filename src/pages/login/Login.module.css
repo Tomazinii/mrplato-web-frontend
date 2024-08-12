@@ -4,7 +4,7 @@
     margin-top: 50px;
     gap: 20px;
     align-items: center;
-    font-family: "default";
+    font-family: "alecrin";
 }
 
 .inputbox{
@@ -37,7 +37,7 @@
     border: none;
     height: 70%;
     font-size: 1.2rem;
-    font-family: "default";
+    font-family: 'alecrin';
     width: 90%;
     
 }
@@ -52,7 +52,7 @@
 .button{
     border: none;
     width: 100%;
-    font-family: "default";
+    font-family: 'alecrin';
     cursor: pointer;
     font-size: 1.2rem;
 }

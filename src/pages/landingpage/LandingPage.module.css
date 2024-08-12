@@ -1,8 +1,11 @@
 
+
+@media (min-width: 800px) {
 .container{
-    font-family: "default";
-    color: #333;
+    font-family: "alecrin";
+    color: #ebebeb;
 }
+
 
 .center{
     height: 100vh;
@@ -19,19 +22,25 @@
 
 .text{
     width: 40%;
-    margin-top: 20px;
+    margin-top: 30px;
     display: flex;
+    font-family: 'alecrin';
     text-align: left;
     justify-content: center;
 }
 
 
 .container{
-    background-image: url("../../asset/landing2.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-
+    background-image: url("../../asset/background.png");
+    border-radius: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center;
+    background-position: center;
+    background-size: contain;
+    
 }
+
 
 
 .containerBox{
@@ -54,3 +63,113 @@
 .containerBoxMaster{
     margin-top: 50px;
 }
+
+.image{
+    background-image: url("../../asset/aristotle.jpg");
+    height: 400px;
+    width: 400px;
+    border-radius: 10px;
+    align-items: center;
+    margin-left: 5px;
+    justify-content: center;
+    background-position: center;
+    background-size: contain;
+}
+.imageStyle{
+    height: 400px;
+    margin-bottom: 40px;
+    margin-top: 10px;
+
+    width: 400px;
+    border-radius: 10px;
+    background-color: #0BD6B4;
+
+}
+
+}
+
+@media (max-width: 800px) {
+  .container{
+      font-family: "alecrin";
+      color: #ebebeb;
+  }
+  
+  .center{
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+  }
+  
+  .content{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+  
+  
+  .text{
+      width: 80%;
+      margin-top: 30px;
+      display: flex;
+      font-family: 'alecrin';
+      text-align: left;
+      justify-content: center;
+  }
+  
+  
+  .container{
+      background-image: url("../../asset/background.png");
+      border-radius: 10px;
+      align-items: center;
+      margin-bottom: 20px;
+      justify-content: center;
+      background-position: center;
+      background-size: contain;
+      
+  }
+  
+  
+  .containerBox{
+      margin-top: 10px;
+      gap: 20px;
+      display: flex;
+  }
+  
+  .box{
+      border-radius: 10px;
+      background-color: white;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+      height: 200px;
+  
+      background-position: center;
+      background-size: contain;
+      width: 200px;
+  }
+  
+  .containerBoxMaster{
+      margin-top: 50px;
+  }
+  
+  .image{
+      background-image: url("../../asset/aristotle.jpg");
+      height: 300px;
+      width: 300px;
+      border-radius: 10px;
+      align-items: center;
+      margin-left: 5px;
+      justify-content: center;
+      background-position: center;
+      background-size: contain;
+  }
+  .imageStyle{
+      height: 300px;
+      margin-bottom: 40px;
+      margin-top: 10px;
+  
+      width: 300px;
+      border-radius: 10px;
+      background-color: #0BD6B4;
+  
+  }
+  
+  }
